@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Internships | Internship & Hackathon Aggregator</title>
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/internships.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <h2>💜 Internship & Hackathon Aggregator</h2>
+
+    <div>
+
+        <a href="dashboard.html">Dashboard</a>
+
+        <a href="internships.html" class="active">Internships</a>
+
+        <a href="hackathons.html">Hackathons</a>
+
+        <a href="saved.html">Saved</a>
+
+        <a href="profile.html">Profile</a>
+
+        <button id="logoutBtn">Logout</button>
+
+    </div>
+
+</nav>
+
+
+<section class="hero">
+
+    <h1>Find Your Dream Internship 💼</h1>
+
+    <p>Explore opportunities from top companies.</p>
+
+</section>
+
+
+<section class="search-section">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search by company or role..."
+    >
+
+    <div class="filters">
+
+        <select id="modeFilter">
+
+            <option value="">All Modes</option>
+
+            <option value="Remote">Remote</option>
+
+            <option value="Hybrid">Hybrid</option>
+
+            <option value="On-site">On-site</option>
+
+        </select>
+
+
+        <select id="companyFilter">
+
+            <option value="">All Companies</option>
+
+        </select>
+
+
+        <select id="locationFilter">
+
+            <option value="">All Locations</option>
+
+        </select>
+
+
+        <select id="sortFilter">
+
+            <option value="">Sort By</option>
+
+            <option value="deadline">
+                Deadline (Nearest First)
+            </option>
+
+            <option value="stipendHigh">
+                Highest Stipend
+            </option>
+
+            <option value="stipendLow">
+                Lowest Stipend
+            </option>
+
+            <option value="company">
+                Company Name (A-Z)
+            </option>
+
+            <option value="job">
+                Job Title (A-Z)
+            </option>
+
+        </select>
+
+    </div>
+
+</section>
+
+
+<section id="internshipContainer" class="cards">
+
+</section>
+
+
+<footer class="footer">
+
+    <p>© 2026 Internship & Hackathon Aggregator</p>
+
+    <p>Developed by Santoshi Mahadik</p>
+
+</footer>
+
+<script src="js/logout.js"></script>
+<script src="js/internships.js"></script>
+
+</body>
+
+</html>

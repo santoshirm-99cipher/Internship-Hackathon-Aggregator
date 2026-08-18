@@ -1,0 +1,466 @@
+/* ===============================
+   HACKATHON PAGE
+================================ */
+
+.page-header {
+    text-align: center;
+    padding: 45px 20px 35px;
+}
+
+.page-header h1 {
+    color: #6d28d9;
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    font-size: 20px;
+    color: #555;
+}
+
+
+/* ===============================
+   HACKATHON CARDS
+================================ */
+
+.cards {
+    width: 94%;
+    max-width: 1400px;
+    margin: 0 auto 50px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 35px;
+}
+
+.card {
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 22px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    transition: 0.3s;
+
+    min-height: 360px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 15px 30px rgba(124,58,237,0.18);
+}
+
+
+/* Event name */
+
+.card h2 {
+    color: #1f2937;
+
+    font-size: 30px;
+
+    margin-bottom: 18px;
+}
+
+
+/* Organizer */
+
+.card h3 {
+    color: #2563eb;
+
+    font-size: 22px;
+
+    margin-bottom: 25px;
+}
+
+
+/* Information */
+
+.card p {
+    font-size: 18px;
+
+    margin: 8px 0;
+
+    color: #374151;
+}
+
+.card strong {
+    color: #1f2937;
+}
+
+
+/* ===============================
+   BUTTONS
+================================ */
+
+.buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-top: auto;
+
+    padding-top: 25px;
+}
+
+
+/* All buttons */
+
+.buttons button {
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 13px 22px;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+/* View Details */
+
+.buttons button:first-child {
+    background: #8b5cf6;
+
+    color: white;
+}
+
+.buttons button:first-child:hover {
+    background: #7c3aed;
+
+    transform: translateY(-3px);
+}
+
+
+/* Register */
+
+.buttons a button {
+    background: #7c3aed;
+
+    color: white;
+}
+
+.buttons a button:hover {
+    background: #6d28d9;
+
+    transform: translateY(-3px);
+}
+
+
+/* Save */
+
+.buttons button:last-child {
+    background: #f3e8ff;
+
+    color: #7c3aed;
+}
+
+.buttons button:last-child:hover {
+    background: #e9d5ff;
+
+    transform: translateY(-3px);
+}
+
+
+/* ===============================
+   MODAL
+================================ */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    z-index: 1000;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.5);
+
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+
+    width: 90%;
+    max-width: 650px;
+
+    padding: 35px;
+
+    border-radius: 20px;
+
+    position: relative;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.modal-content h2 {
+    color: #6d28d9;
+
+    font-size: 30px;
+
+    margin-bottom: 10px;
+}
+
+.modal-content h3 {
+    color: #2563eb;
+
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    font-size: 17px;
+
+    line-height: 1.6;
+
+    margin: 8px 0;
+}
+
+.close {
+    position: absolute;
+
+    right: 20px;
+    top: 10px;
+
+    font-size: 32px;
+
+    cursor: pointer;
+
+    color: #555;
+}
+
+.close:hover {
+    color: #7c3aed;
+}
+
+
+/* Register inside modal */
+
+.registerBtn {
+    background: #7c3aed;
+
+    color: white;
+
+    border: none;
+
+    padding: 13px 25px;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.registerBtn:hover {
+    background: #6d28d9;
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1000px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header h1 {
+        font-size: 36px;
+    }
+
+    .buttons {
+        flex-wrap: wrap;
+    }
+
+    .buttons button {
+        flex: 1;
+    }
+
+}
+
+/* ================= CONTROLS ================= */
+
+.hackathon-controls {
+
+    width: 90%;
+    max-width: 1100px;
+
+    margin: 0 auto 35px;
+
+    display: flex;
+
+    gap: 15px;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+}
+
+.hackathon-controls input {
+
+    width: 450px;
+
+    padding: 14px 18px;
+
+    border: 2px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    outline: none;
+
+}
+
+.hackathon-controls input:focus {
+
+    border-color: #8b5cf6;
+
+}
+
+.hackathon-controls select {
+
+    padding: 14px 18px;
+
+    border: 2px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    background: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    outline: none;
+
+}
+
+.hackathon-controls select:focus {
+
+    border-color: #8b5cf6;
+
+}
+
+
+/* ================= STATUS ================= */
+
+.open {
+
+    display: inline-block;
+
+    margin: 10px 0;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+.closing {
+
+    display: inline-block;
+
+    margin: 10px 0;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    background: #fef3c7;
+
+    color: #92400e;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+.expired {
+
+    display: inline-block;
+
+    margin: 10px 0;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    background: #fee2e2;
+
+    color: #991b1b;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+    .hackathon-controls {
+
+        width: 92%;
+
+    }
+
+    .hackathon-controls input {
+
+        width: 100%;
+
+    }
+
+    .hackathon-controls select {
+
+        width: 100%;
+
+    }
+
+}

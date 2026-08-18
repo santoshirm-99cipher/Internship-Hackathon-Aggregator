@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f8f7ff;
+    min-height: 100vh;
+}
+
+/* ================= REGISTER PAGE ================= */
+
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.register-container {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 650px;
+
+    display: flex;
+
+    background: white;
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ================= LEFT SIDE ================= */
+
+.left {
+    width: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #8b5cf6,
+        #7c3aed
+    );
+
+    color: white;
+
+    padding: 70px 60px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.left h1 {
+    font-size: 46px;
+    line-height: 1.2;
+    margin-bottom: 25px;
+}
+
+.left p {
+    font-size: 19px;
+    line-height: 1.8;
+    max-width: 500px;
+}
+
+/* ================= RIGHT SIDE ================= */
+
+.right {
+    width: 50%;
+
+    padding: 60px 80px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right h2 {
+    font-size: 42px;
+    color: #374151;
+    margin-bottom: 30px;
+}
+
+/* ================= FORM ================= */
+
+#registerForm {
+    width: 100%;
+}
+
+#registerForm input {
+    width: 100%;
+
+    padding: 17px 20px;
+
+    margin-bottom: 20px;
+
+    border: 2px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+#registerForm input:focus {
+    border-color: #8b5cf6;
+}
+
+/* ================= REGISTER BUTTON ================= */
+
+#registerForm button {
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        90deg,
+        #8b5cf6,
+        #7c3aed
+    );
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+#registerForm button:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+}
+
+/* ================= MESSAGE ================= */
+
+#message {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 15px;
+}
+
+/* ================= LOGIN LINK ================= */
+
+.right > p:last-child {
+    text-align: center;
+
+    margin-top: 25px;
+
+    font-size: 16px;
+
+    color: #6b7280;
+}
+
+.right a {
+    color: #7c3aed;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.right a:hover {
+    text-decoration: underline;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+    display: none;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+    .register-page {
+        padding: 20px;
+    }
+
+    .register-container {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .left {
+        width: 100%;
+        padding: 40px 30px;
+        text-align: center;
+    }
+
+    .left h1 {
+        font-size: 34px;
+    }
+
+    .left p {
+        font-size: 16px;
+    }
+
+    .right {
+        width: 100%;
+        padding: 40px 30px;
+    }
+
+    .right h2 {
+        font-size: 32px;
+    }
+}

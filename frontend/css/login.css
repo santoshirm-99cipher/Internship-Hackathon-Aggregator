@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f8f7ff;
+    min-height: 100vh;
+}
+
+/* ================= LOGIN PAGE ================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+/* Main Login Box */
+
+.login-container {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 650px;
+
+    display: flex;
+
+    background: white;
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ================= LEFT SIDE ================= */
+
+.login-left {
+    width: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #8b5cf6,
+        #7c3aed
+    );
+
+    color: white;
+
+    padding: 70px 60px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-left h1 {
+    font-size: 48px;
+    line-height: 1.2;
+
+    margin-bottom: 25px;
+}
+
+.login-left h2 {
+    font-size: 28px;
+
+    margin-bottom: 20px;
+}
+
+.login-left p {
+    font-size: 20px;
+
+    line-height: 1.8;
+
+    max-width: 500px;
+}
+
+/* ================= RIGHT SIDE ================= */
+
+.login-right {
+    width: 50%;
+
+    padding: 60px 80px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.login-right h1 {
+    font-size: 42px;
+
+    color: #374151;
+
+    margin-bottom: 10px;
+}
+
+.login-subtitle {
+    font-size: 18px;
+
+    color: #6b7280;
+
+    margin-bottom: 35px;
+}
+
+/* ================= FORM ================= */
+
+.login-form {
+    width: 100%;
+}
+
+.login-form input {
+    width: 100%;
+
+    padding: 17px 20px;
+
+    margin-bottom: 20px;
+
+    border: 2px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+.login-form input:focus {
+    border-color: #8b5cf6;
+}
+
+/* Login Button */
+
+.login-btn {
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        90deg,
+        #8b5cf6,
+        #7c3aed
+    );
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+}
+
+/* Register */
+
+.register-text {
+    text-align: center;
+
+    margin-top: 25px;
+
+    font-size: 16px;
+
+    color: #6b7280;
+}
+
+.register-text a {
+    color: #7c3aed;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.register-text a:hover {
+    text-decoration: underline;
+}
+
+/* ================= FOOTER ================= */
+
+.login-footer {
+    display: none;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+    .login-page {
+        padding: 20px;
+    }
+
+    .login-container {
+        flex-direction: column;
+
+        min-height: auto;
+    }
+
+    .login-left {
+        width: 100%;
+
+        padding: 40px 30px;
+
+        text-align: center;
+    }
+
+    .login-left h1 {
+        font-size: 36px;
+    }
+
+    .login-left h2 {
+        font-size: 22px;
+    }
+
+    .login-left p {
+        font-size: 16px;
+    }
+
+    .login-right {
+        width: 100%;
+
+        padding: 40px 30px;
+    }
+
+    .login-right h1 {
+        font-size: 32px;
+    }
+}

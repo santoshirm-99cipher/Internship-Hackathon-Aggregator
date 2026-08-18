@@ -1,0 +1,166 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#eef3ff;
+}
+
+/* Navigation */
+
+.navbar{
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:18px 60px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.logo{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+}
+
+.navbar ul{
+
+    list-style:none;
+
+    display:flex;
+
+    gap:25px;
+
+}
+
+.navbar a{
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
+.navbar a:hover{
+
+    color:#ffd54f;
+
+}
+
+/* Hero Section */
+
+.hero{
+
+    text-align:center;
+
+    padding:50px 20px;
+
+}
+
+.hero h1{
+
+    font-size:42px;
+
+    color:#2563eb;
+
+}
+
+.hero p{
+
+    margin-top:10px;
+
+    font-size:18px;
+
+    color:#555;
+
+}
+
+/* Dashboard Cards */
+
+.dashboard{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+    gap:30px;
+
+    padding:40px 80px;
+
+}
+
+.box{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:35px;
+
+    text-align:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+
+    transition:.3s;
+
+}
+
+.box:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.icon{
+
+    font-size:50px;
+
+    margin-bottom:15px;
+
+}
+
+.box h2{
+
+    color:#2563eb;
+
+    font-size:42px;
+
+}
+
+.box p{
+
+    margin-top:10px;
+
+    font-size:20px;
+
+}
+
+.box a{
+
+    text-decoration:none;
+
+    color:#2563eb;
+
+    font-weight:bold;
+
+    font-size:20px;
+
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+}

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Internship & Hackathon Aggregator</title>
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="brand">
+        💜 Internship & Hackathon Aggregator
+    </div>
+
+    <div class="nav-links">
+
+        <a href="dashboard.html" class="active">
+            Dashboard
+        </a>
+
+        <a href="internships.html">
+            Internships
+        </a>
+
+        <a href="hackathons.html">
+            Hackathons
+        </a>
+
+        <a href="saved.html">
+            Saved
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <button id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="dashboard-hero">
+
+    <div>
+
+        <p class="welcome-label">
+            YOUR OPPORTUNITY HUB
+        </p>
+
+        <h1>
+            Welcome Back 👋
+        </h1>
+
+        <p class="hero-text">
+            Discover internships and hackathons that can
+            help you build your skills and career.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="internships.html" class="primary-btn">
+                Explore Internships →
+            </a>
+
+            <a href="hackathons.html" class="secondary-btn">
+                Find Hackathons
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATISTICS ================= -->
+
+<section class="stats-section">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            💼
+        </div>
+
+        <div>
+            <p>Available</p>
+            <h2 id="internshipCount">0</h2>
+            <span>Internships</span>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🏆
+        </div>
+
+        <div>
+            <p>Available</p>
+            <h2 id="hackathonCount">0</h2>
+            <span>Hackathons</span>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            ❤️
+        </div>
+
+        <div>
+            <p>Your</p>
+            <h2 id="savedCount">0</h2>
+            <span>Saved Opportunities</span>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card profile-stat">
+
+        <div class="stat-icon">
+            👤
+        </div>
+
+        <div>
+
+            <p>Manage</p>
+
+            <h2>Profile</h2>
+
+            <a href="profile.html">
+                View Profile →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURED ================= -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="section-label">
+                HANDPICKED FOR YOU
+            </p>
+
+            <h2>
+                Featured Opportunities
+            </h2>
+        </div>
+
+    </div>
+
+
+    <div class="featured-grid">
+
+
+        <!-- Internship -->
+
+<div class="opportunity-card internship-feature">
+
+    <div class="opportunity-top">
+
+        <span class="badge">
+            💼 Internship
+        </span>
+
+        <span class="featured-star">
+            ⭐
+        </span>
+
+    </div>
+
+    <div id="featuredInternship">
+        Loading...
+    </div>
+
+</div>
+
+      <!-- Hackathon -->
+
+<div class="opportunity-card hackathon-feature">
+
+    <div class="opportunity-top">
+
+        <span class="badge">
+            🏆 Hackathon
+        </span>
+
+        <span class="featured-star">
+            ⭐
+        </span>
+
+    </div>
+
+    <div id="featuredHackathon">
+        Loading...
+    </div>
+
+</div>  
+</div>
+</section>
+
+<!-- ================= RECOMMENDED ================= -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <p class="section-label">
+                PERSONALIZED FOR YOU
+            </p>
+
+            <h2>
+                ⭐ Recommended Opportunities
+            </h2>
+
+            <p>
+                Opportunities matched with your skills and preferred location.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div id="recommendedContainer" class="recommended-grid">
+
+        <p>Loading recommendations...</p>
+
+    </div>
+
+</section>
+
+<!-- ================= LATEST ================= -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <p class="section-label">
+                FRESH OPPORTUNITIES
+            </p>
+
+            <h2>
+                Latest Opportunities
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="latest-grid">
+
+
+        <!-- Latest internships -->
+
+        <div class="latest-card">
+
+            <div class="latest-header">
+
+                <div class="latest-icon">
+                    💼
+                </div>
+
+                <div>
+
+                    <h3>
+                        Latest Internships
+                    </h3>
+
+                    <p>
+                        Recently added opportunities
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="latestInternships">
+                Loading...
+            </div>
+
+            <a href="internships.html" class="view-all">
+                View all internships →
+            </a>
+
+        </div>
+
+
+        <!-- Latest hackathons -->
+
+        <div class="latest-card">
+
+            <div class="latest-header">
+
+                <div class="latest-icon">
+                    🏆
+                </div>
+
+                <div>
+
+                    <h3>
+                        Latest Hackathons
+                    </h3>
+
+                    <p>
+                        Competitions you can join
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="latestHackathons">
+                Loading...
+            </div>
+
+            <a href="hackathons.html" class="view-all">
+                View all hackathons →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DEADLINES ================= -->
+
+<section class="section">
+
+    <div class="deadline-card">
+
+        <div class="deadline-header">
+
+            <div>
+
+                <p class="section-label">
+                    DON'T MISS OUT
+                </p>
+
+                <h2>
+                    ⏳ Upcoming Deadlines
+                </h2>
+
+            </div>
+
+            <a href="internships.html">
+                View all →
+            </a>
+
+        </div>
+
+        <div id="deadlineList">
+            Loading deadlines...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 Internship & Hackathon Aggregator
+    </p>
+
+    <p>
+        Developed by Santoshi Mahadik
+    </p>
+
+</footer>
+
+
+<script src="js/logout.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

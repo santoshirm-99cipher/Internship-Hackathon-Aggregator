@@ -1,0 +1,16 @@
+console.log("✅ authRoutes.js loaded");
+
+const express = require("express");
+const router = express.Router();
+
+const {
+    register,
+    login,
+    getProfile
+} = require("../controllers/authController");
+
+router.post("/register", register);
+router.post("/login", login);
+router.get("/profile/:id", getProfile);
+
+module.exports = router;

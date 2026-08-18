@@ -1,0 +1,197 @@
+/* ===============================
+   INTERNSHIP DETAILS
+================================ */
+
+body {
+    background: #f8f7ff;
+}
+
+
+/* Main container */
+
+#detailsContainer {
+    padding: 50px 20px;
+}
+
+
+/* Details card */
+
+.details {
+
+    max-width: 900px;
+
+    margin: 20px auto;
+
+    background: white;
+
+    padding: 45px;
+
+    border-radius: 22px;
+
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.12);
+}
+
+
+/* Company logo */
+
+.logo {
+
+    width: 80px;
+
+    height: 80px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #8b5cf6,
+        #7c3aed
+    );
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+    margin-bottom: 25px;
+}
+
+
+/* Job title */
+
+.details h1 {
+
+    color: #6d28d9;
+
+    font-size: 38px;
+
+    margin-bottom: 10px;
+}
+
+
+/* Company */
+
+.details h2 {
+
+    color: #374151;
+
+    margin-bottom: 25px;
+}
+
+
+/* Information */
+
+.info {
+
+    margin: 14px 0;
+
+    font-size: 17px;
+
+    color: #374151;
+}
+
+
+/* Skills */
+
+.skills {
+
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin: 25px 0;
+}
+
+
+/* Skill badge */
+
+.skill {
+
+    background: #f3e8ff;
+
+    color: #7c3aed;
+
+    padding: 8px 15px;
+
+    border-radius: 20px;
+
+    font-weight: 500;
+}
+
+
+/* Description */
+
+.description {
+
+    margin-top: 25px;
+
+    line-height: 1.7;
+
+    color: #4b5563;
+}
+
+
+/* Apply button */
+
+.apply {
+
+    display: inline-block;
+
+    margin-top: 25px;
+
+    background: #7c3aed;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 13px 25px;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+
+.apply:hover {
+
+    background: #6d28d9;
+
+    transform: translateY(-2px);
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    #detailsContainer {
+
+        padding: 25px 15px;
+
+    }
+
+    .details {
+
+        padding: 25px;
+
+    }
+
+    .details h1 {
+
+        font-size: 30px;
+
+    }
+
+}

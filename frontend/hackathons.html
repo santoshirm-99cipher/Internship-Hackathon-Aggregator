@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hackathons | Internship & Hackathon Aggregator</title>
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/hackathons.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <h2>💜 Internship & Hackathon Aggregator</h2>
+
+<div>
+
+    <a href="dashboard.html">Dashboard</a>
+
+    <a href="internships.html">Internships</a>
+
+    <a href="hackathons.html" class="active">
+        Hackathons
+    </a>
+
+    <a href="saved.html">Saved</a>
+
+    <a href="profile.html">Profile</a>
+
+    <button id="logoutBtn">Logout</button>
+
+</div>
+
+</nav>
+
+
+<section class="page-header">
+
+    <h1>🏆 Available Hackathons</h1>
+
+    <p>Discover hackathons and showcase your skills.</p>
+
+</section>
+
+<section class="hackathon-controls">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔎 Search hackathons or organizers..."
+    >
+
+    <select id="modeFilter">
+
+        <option value="">All Modes</option>
+
+        <option value="Online">Online</option>
+
+        <option value="Offline">Offline</option>
+
+        <option value="Hybrid">Hybrid</option>
+
+    </select>
+
+    <select id="sortFilter">
+
+        <option value="">Sort By</option>
+
+        <option value="deadline">
+            Deadline (Nearest First)
+        </option>
+
+        <option value="prizeHigh">
+            Highest Prize
+        </option>
+
+        <option value="name">
+            Name (A-Z)
+        </option>
+
+    </select>
+
+</section>
+
+<div id="hackathonContainer" class="cards"></div>
+
+<!-- Hackathon Details Modal -->
+
+<div id="hackathonModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">&times;</span>
+
+        <div id="modalBody"></div>
+
+    </div>
+
+</div>
+
+
+<footer class="footer">
+
+    <p>© 2026 Internship & Hackathon Aggregator</p>
+
+    <p>Developed by Santoshi Mahadik</p>
+
+</footer>
+
+<script src="js/logout.js"></script>
+<script src="js/hackathons.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+/* ================= PROFILE PAGE ================= */
+
+.page-header {
+    text-align: center;
+    padding: 50px 20px 30px;
+}
+
+.page-header h1 {
+    font-size: 40px;
+    color: #374151;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #6b7280;
+    font-size: 16px;
+}
+
+
+/* ================= PROFILE CARD ================= */
+
+.profile-card {
+    width: 90%;
+    max-width: 850px;
+    margin: 0 auto 60px;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 30px rgba(124, 58, 237, 0.12);
+}
+
+
+/* ================= FORM ================= */
+
+.profile-card label {
+    display: block;
+
+    margin-top: 18px;
+    margin-bottom: 7px;
+
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.profile-card input {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: 2px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+.profile-card input:focus {
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+
+/* ================= SAVE BUTTON ================= */
+
+.profile-card > button {
+    margin-top: 25px;
+
+    padding: 13px 25px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #7c3aed
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.profile-card > button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(124, 58, 237, 0.25);
+}
+
+
+/* ================= SAVED STATISTICS ================= */
+
+.profile-card hr {
+    border: none;
+
+    border-top: 1px solid #e5e7eb;
+
+    margin: 35px 0 25px;
+}
+
+.profile-card > p {
+    background: #f8f7ff;
+
+    padding: 15px 18px;
+
+    border-radius: 10px;
+
+    margin-top: 12px;
+
+    color: #374151;
+}
+
+.profile-card > p strong {
+    color: #6d28d9;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+    .page-header h1 {
+        font-size: 30px;
+    }
+
+    .profile-card {
+        width: 92%;
+
+        padding: 25px;
+    }
+
+}
