@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Skill Analytics | Internship & Hackathon Aggregator</title>
+
+    <link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/analytics.css">
+</head>
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="brand">
+        💜 Internship & Hackathon Aggregator
+    </div>
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="internships.html">
+            Internships
+        </a>
+
+        <a href="hackathons.html">
+            Hackathons
+        </a>
+
+        <a href="team-matcher.html">
+            🤝 Team Matcher
+        </a>
+
+        <a href="saved.html">
+            Saved
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <button id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+</header>
+
+    <main class="analytics-container">
+
+        <section class="page-heading">
+            <h1>Skill Demand Analytics</h1>
+            <p>Explore the most demanded skills in available internships.</p>
+        </section>
+
+        <section class="analytics-filter">
+    <label for="categoryFilter">Filter by:</label>
+
+    <select id="categoryFilter">
+        <option value="all">All</option>
+        <option value="sde">SDE</option>
+        <option value="data">Data</option>
+        <option value="web">Web Development</option>
+    </select>
+
+    <p class="last-updated">
+        Last updated: Today
+    </p>
+</section>
+
+        <section class="summary-card">
+            <h2>Total Internship Listings</h2>
+            <p id="totalListings">Loading...</p>
+        </section>
+
+        <section class="skills-section">
+            <h2>Most Demanded Skills</h2>
+
+            <div id="skillsContainer">
+                <p>Loading skill data...</p>
+            </div>
+        </section>
+
+        <section class="insight-card">
+    <div class="insight-icon">💡</div>
+
+    <div>
+        <h2>Market Insight</h2>
+
+        <p id="marketInsight">
+            Java is currently the highest-demand skill. SQL is also commonly
+            requested, so learning SQL after Java may improve your internship options.
+        </p>
+    </div>
+</section>
+
+<section class="gap-card">
+    <div class="gap-header">
+        <span class="gap-icon">🎯</span>
+
+        <div>
+            <h2>Personal Skill Gap</h2>
+            <p>Compare your skills with current internship demand.</p>
+        </div>
+    </div>
+
+    <button id="skillGapBtn" class="primary-btn">
+    Find Internships I Can Unlock →
+</button>
+
+<div id="skillGapResults"></div>
+</section>
+
+<section class="learning-section">
+    <h2>Trend + Learning Path</h2>
+
+    <div class="learning-grid">
+        <div class="learning-card">
+            <span class="trend-badge high">↑ High Demand</span>
+
+            <h3>Java</h3>
+
+            <p>32% of internship listings</p>
+
+            <p class="learning-time">Learn in approximately 2 weeks</p>
+
+            <a
+                href="https://dev.java/learn/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Free Java Learning Resource →
+            </a>
+        </div>
+
+        <div class="learning-card">
+            <span class="trend-badge niche">↓ Niche</span>
+
+            <h3>Machine Learning</h3>
+
+            <p>9% of internship listings</p>
+
+            <p class="learning-time">Best for AI and data-related roles</p>
+
+            <a
+                href="https://developers.google.com/machine-learning/crash-course"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Free ML Learning Resource →
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="category-section">
+    <h2>Skill Categories</h2>
+
+    <div class="category-grid">
+        <div class="category-card">
+            <h3>Frontend Development</h3>
+            <p>HTML, CSS, JavaScript, React</p>
+            <strong>12% combined demand</strong>
+        </div>
+
+        <div class="category-card">
+            <h3>Backend Development</h3>
+            <p>Java, Spring Boot, Node.js</p>
+            <strong>32% combined demand</strong>
+        </div>
+
+        <div class="category-card">
+            <h3>Data and AI</h3>
+            <p>Python, Machine Learning, Pandas, TensorFlow</p>
+            <strong>Data-focused opportunities</strong>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <footer>
+        © 2026 Internship & Hackathon Aggregator
+    </footer>
+    
+    <script src="js/logout.js"></script>
+    <script src="js/analytics.js">
+    </script>
+
+</body>
+</html>

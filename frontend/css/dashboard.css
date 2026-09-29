@@ -858,3 +858,156 @@ body {
     color: #2563eb;
     font-weight: 600;
 }
+
+/* =========================================
+   WHY THIS FITS YOU
+========================================= */
+
+.recommendation-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.match-score {
+    background: #DCFCE7;
+    color: #15803D;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.why-fit {
+    margin-top: 18px;
+    padding: 15px;
+    background: #F8F7FF;
+    border: 1px solid #E9E3FF;
+    border-radius: 12px;
+}
+
+.why-fit h4 {
+    margin: 0 0 10px;
+    color: #5B21B6;
+    font-size: 14px;
+}
+
+.why-fit ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.why-fit li {
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+}
+
+.why-fit li:last-child {
+    margin-bottom: 0;
+}
+
+/* ================= TEAM CHEMISTRY DASHBOARD ================= */
+
+.team-matcher-dashboard-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    padding: 35px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.team-matcher-content {
+    flex: 1;
+}
+
+.team-matcher-content h2 {
+    font-size: 28px;
+    margin: 8px 0 12px;
+}
+
+.team-matcher-content > p {
+    color: #666;
+    line-height: 1.6;
+    max-width: 700px;
+}
+
+.team-matcher-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.team-matcher-highlights span {
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: #f1efff;
+    font-size: 14px;
+}
+
+.team-matcher-icon {
+    font-size: 75px;
+}
+
+@media (max-width: 700px) {
+
+    .team-matcher-dashboard-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .team-matcher-highlights {
+        justify-content: center;
+    }
+
+    .team-matcher-icon {
+        font-size: 55px;
+    }
+
+}
+
+.stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 25px;
+    width: 100%;
+    margin: 30px 0;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-width: 0;
+    min-height: 170px;
+    padding: 28px;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 24px;
+}
+
+.admin-panel-btn {
+    background: white;
+    color: #7C3AED;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 0 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    transition: 0.2s ease;
+}
+
+.admin-panel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}

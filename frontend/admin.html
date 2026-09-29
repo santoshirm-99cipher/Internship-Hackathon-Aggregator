@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/admin.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>👑 Admin Dashboard</h1>
+
+        <p id="welcome"></p>
+
+
+        <!-- ADMIN MANAGEMENT CARDS -->
+
+        <div class="admin-grid">
+
+            <!-- INTERNSHIPS -->
+
+            <div class="admin-card">
+
+                <h2>💼 Internship Management</h2>
+
+                <p>
+                    Add, edit and delete internship opportunities.
+                </p>
+
+                <button
+                    onclick="location.href='admin-internships.html'">
+                    Manage Internships
+                </button>
+
+            </div>
+
+
+            <!-- HACKATHONS -->
+
+            <div class="admin-card">
+
+                <h2>🏆 Hackathon Management</h2>
+
+                <p>
+                    Add, edit and delete hackathon opportunities.
+                </p>
+
+                <button
+                    onclick="location.href='admin-hackathons.html'">
+                    Manage Hackathons
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+
+    <script>
+
+        const user =
+            JSON.parse(localStorage.getItem("user"));
+
+
+        // ADMIN ACCESS CHECK
+
+        if (!user || user.role !== "admin") {
+
+            alert("Access Denied ❌");
+
+            window.location.href = "dashboard.html";
+
+        }
+
+
+        // WELCOME MESSAGE
+
+        document.getElementById("welcome").textContent =
+            `Welcome, ${user.full_name}!`;
+
+
+        // LOGOUT
+
+        function logout() {
+
+            localStorage.removeItem("user");
+
+            localStorage.removeItem("token");
+
+            window.location.href = "login.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

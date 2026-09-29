@@ -3,131 +3,350 @@ const searchInput = document.getElementById("searchInput");
 
 let internships = [];
 
+const urlParams = new URLSearchParams(window.location.search);
+const selectedSkill = urlParams.get("skill");
 const modeFilter = document.getElementById("modeFilter");
 const companyFilter = document.getElementById("companyFilter");
 const locationFilter = document.getElementById("locationFilter");
 const sortFilter = document.getElementById("sortFilter");
 
-// Load internships
+
+// =========================================
+// LOAD INTERNSHIPS
+// =========================================
+
 fetch("http://localhost:5001/api/internships")
     .then(res => res.json())
     .then(data => {
 
         internships = data;
 
-        populateFilters();
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedSkill = urlParams.get("skill");
 
-        displayInternships(internships);
+        if (selectedSkill) {
+            internships = internships.filter(job =>
+                (job.skills || "")
+                    .toLowerCase()
+                    .includes(selectedSkill.toLowerCase())
+            );
+        }
+
+        populateFilters();
+        applyFilters();
 
     })
     .catch(err => console.log(err));
 
-// Display internships
-function displayInternships(list){
+// =========================================
+// GET STATUS
+// =========================================
+
+function getStatus(deadline) {
+
+    if (!deadline) {
+        return {
+            text: "Open",
+            className: "open",
+            priority: 1
+        };
+    }
+
+    // Convert database date to YYYY-MM-DD
+    let dateString = String(deadline).split("T")[0];
+
+    // If date is DD/MM/YYYY, convert it
+    if (dateString.includes("/")) {
+        const parts = dateString.split("/");
+
+        if (parts.length === 3) {
+            dateString = `${parts[2]}-${parts[1].padStart(2, "0")}-${parts[0].padStart(2, "0")}`;
+        }
+    }
+
+    const deadlineDate = new Date(`${dateString}T23:59:59`);
+
+    // Check for invalid date
+    if (isNaN(deadlineDate.getTime())) {
+        console.error("Invalid deadline:", deadline);
+
+        return {
+            text: "Open",
+            className: "open",
+            priority: 1
+        };
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const difference = Math.ceil(
+        (deadlineDate - today) / (1000 * 60 * 60 * 24)
+    );
+
+    // Deadline has passed
+    if (difference < 0) {
+        return {
+            text: "Expired",
+            className: "expired",
+            priority: 3
+        };
+    }
+
+    // Deadline is within 7 days
+    if (difference <= 7) {
+        return {
+            text: "Closing Soon",
+            className: "closing-soon",
+            priority: 2
+        };
+    }
+
+    // More than 7 days remaining
+    return {
+        text: "Open",
+        className: "open",
+        priority: 1
+    };
+}
+
+// =========================================
+// APPLICATION READINESS SCORE
+// =========================================
+
+function calculateReadiness(job) {
+
+    const profile =
+        JSON.parse(localStorage.getItem("profile")) || {};
+
+    let score = 0;
+
+    const userSkills =
+        (profile.skills || "")
+            .toLowerCase()
+            .split(",")
+            .map(skill => skill.trim())
+            .filter(Boolean);
+
+    const jobSkills =
+        (job.skills || "")
+            .toLowerCase()
+            .split(",")
+            .map(skill => skill.trim())
+            .filter(Boolean);
+
+    // Skills match — maximum 50 points
+    if (userSkills.length && jobSkills.length) {
+
+        const matchedSkills = jobSkills.filter(jobSkill =>
+            userSkills.some(userSkill =>
+                jobSkill.includes(userSkill) ||
+                userSkill.includes(jobSkill)
+            )
+        );
+
+        const skillScore =
+            Math.min(
+                50,
+                Math.round(
+                    (matchedSkills.length / jobSkills.length) * 50
+                )
+            );
+
+        score += skillScore;
+    }
+
+    // Location preference — 20 points
+    const preferredLocation =
+        (profile.location || "").toLowerCase().trim();
+
+    if (
+        preferredLocation &&
+        (job.location || "")
+            .toLowerCase()
+            .includes(preferredLocation)
+    ) {
+        score += 20;
+    }
+
+    // Profile completeness — 20 points
+    if (profile.skills) score += 10;
+    if (profile.location) score += 5;
+    if (profile.name) score += 5;
+
+    // Deadline — 10 points
+    if (job.deadline) {
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const deadline = new Date(job.deadline);
+        deadline.setHours(0, 0, 0, 0);
+
+        const daysLeft =
+            Math.ceil(
+                (deadline - today) /
+                (1000 * 60 * 60 * 24)
+            );
+
+        if (daysLeft >= 7) {
+            score += 10;
+        } else if (daysLeft >= 3) {
+            score += 7;
+        } else if (daysLeft >= 0) {
+            score += 4;
+        }
+    }
+
+    return Math.min(score, 100);
+}
+
+
+// =========================================
+// DISPLAY INTERNSHIPS
+// =========================================
+
+function displayInternships(list) {
 
     let html = "";
-    const saved = JSON.parse(localStorage.getItem("savedInternships")) || [];
+
+    const saved =
+        JSON.parse(
+            localStorage.getItem("savedInternships")
+        ) || [];
+
 
     list.forEach(job => {
 
-        // Skills badges
+        // -----------------------------
+        // Skills
+        // -----------------------------
+
         let skillsHTML = "";
 
-        if(job.skills){
+        if (job.skills) {
 
             const skills = job.skills.split(",");
 
             skills.forEach(skill => {
 
                 skillsHTML += `
-                    <span class="skill">${skill.trim()}</span>
+                    <span class="skill">
+                        ${skill.trim()}
+                    </span>
                 `;
 
             });
 
         }
 
-        let status = "";
 
-const today = new Date();
-const deadline = new Date(job.deadline);
+        // -----------------------------
+        // Status
+        // -----------------------------
 
-const diffDays = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+        const status =
+            getStatus(job.deadline);
 
-if (diffDays < 0) {
-    status = `<span class="expired">🔴 Expired</span>`;
-}
-else if (diffDays <= 7) {
-    status = `<span class="closing">🟡 Closing Soon</span>`;
-}
-else {
-    status = `<span class="open">🟢 Open</span>`;
-}
+
+        // -----------------------------
+        // Card
+        // -----------------------------
 
         html += `
 
         <div class="card">
 
-            <div class="company">
+        <div class="company">
 
-                <div class="logo">
-                    ${job.company_name.charAt(0)}
-                </div>
+    <div class="logo">
+        ${job.company_name.charAt(0)}
+    </div>
 
-                <div>
+    <div>
 
-                <h3>${job.company_name}</h3>
+        <h3>
+            ${job.company_name}
+        </h3>
 
-${status}
+        <span class="status-badge ${status.className}">
+            ${status.text}
+        </span>
 
-<p>${job.location}</p>
+        <p>
+            ${job.location || "Not specified"}
+        </p>
 
-                </div>
+    </div>
 
-            </div>
+</div>
 
             <div class="job">
                 ${job.job_title}
             </div>
 
-            <p class="info">💻 ${job.mode}</p>
 
-            <p class="info">💰 ${job.stipend}</p>
+            <p class="info">
+                💻 ${job.mode}
+            </p>
+
+
+            <p class="info">
+                💰 ${job.stipend}
+            </p>
+
 
             <p class="info">
     📅 Apply Before:
-    ${new Date(job.deadline).toLocaleDateString()}
+    ${
+        job.deadline
+            ? new Date(job.deadline).toLocaleDateString()
+            : "Deadline not published"
+    }
 </p>
+
+${job.application_time_hours > 0 ? `
+<div class="application-cost">
+    <strong>⏱️ Application Cost: ~${job.application_time_hours}h</strong>
+    <span>🎯 ${job.interview_rounds || 0} rounds</span>
+    ${job.assignment_hours > 0 ? `<span>📝 ${job.assignment_hours}h assignment</span>` : ""}
+    ${job.assessment_minutes > 0 ? `<span>🧪 ${job.assessment_minutes}m assessment</span>` : ""}
+</div>
+` : ""}
+
 
             <p class="info">
                 ${job.description || ""}
             </p>
 
+
             <div class="skills">
-
                 ${skillsHTML}
-
             </div>
+
 
             <div class="buttons">
 
-    <button
-        class="save"
-        onclick="saveInternship(${job.id})">
+                <button
+                    class="save"
+                    onclick="saveInternship(${job.id})">
 
-        ${saved.includes(job.id) ? "💜 Saved" : "❤️ Save"}
+                    ${saved.includes(job.id)
+                        ? "Saved"
+                        : "Save"}
 
-    </button>
+                </button>
 
-    <a
-    href="internship-details.html?id=${job.id}"
-    class="apply">
 
-    View Details →
+                <a
+                    href="internship-details.html?id=${job.id}"
+                    class="apply">
 
-</a>
+                    View Details →
 
-</div>
+                </a>
+
+            </div>
 
         </div>
 
@@ -135,155 +354,374 @@ ${status}
 
     });
 
-    if(html === ""){
 
-    container.innerHTML = `
-        <div class="no-result">
-            <h2>😔 No internships found</h2>
-            <p>Try changing your search or filters.</p>
-        </div>
-    `;
+    // -----------------------------
+    // No results
+    // -----------------------------
 
-}else{
+    if (html === "") {
 
-    container.innerHTML = html;
+        container.innerHTML = `
+
+            <div class="no-result">
+
+                <h2>No internships found</h2>
+
+                <p>
+                    Try changing your search or filters.
+                </p>
+
+            </div>
+
+        `;
+
+    } else {
+
+        container.innerHTML = html;
+
+    }
 
 }
 
-}
+
+// =========================================
+// POPULATE FILTERS
+// =========================================
 
 function populateFilters() {
 
-    companyFilter.innerHTML = '<option value="">All Companies</option>';
-    locationFilter.innerHTML = '<option value="">All Locations</option>';
+    companyFilter.innerHTML =
+        '<option value="">All Companies</option>';
 
-    const companies = [...new Set(internships.map(job => job.company_name))]
-        .sort();
+    locationFilter.innerHTML =
+        '<option value="">All Locations</option>';
+
+
+    const companies = [
+        ...new Set(
+            internships.map(
+                job => job.company_name
+            )
+        )
+    ].sort();
+
 
     companies.forEach(company => {
 
-        companyFilter.innerHTML +=
-            `<option value="${company}">${company}</option>`;
+        companyFilter.innerHTML += `
+            <option value="${company}">
+                ${company}
+            </option>
+        `;
 
     });
 
-    const locations = [...new Set(internships.map(job => job.location))]
-        .sort();
+
+    const locations = [
+        ...new Set(
+            internships.map(
+                job => job.location
+            )
+        )
+    ].sort();
+
 
     locations.forEach(location => {
 
-        locationFilter.innerHTML +=
-            `<option value="${location}">${location}</option>`;
+        locationFilter.innerHTML += `
+            <option value="${location}">
+                ${location}
+            </option>
+        `;
 
     });
 
 }
 
-// Search
-searchInput.addEventListener("keyup", applyFilters);
 
-modeFilter.addEventListener("change", applyFilters);
+// =========================================
+// FILTER EVENTS
+// =========================================
 
-companyFilter.addEventListener("change", applyFilters);
+searchInput.addEventListener(
+    "keyup",
+    applyFilters
+);
 
-locationFilter.addEventListener("change", applyFilters);
+modeFilter.addEventListener(
+    "change",
+    applyFilters
+);
 
-sortFilter.addEventListener("change", applyFilters);
+companyFilter.addEventListener(
+    "change",
+    applyFilters
+);
 
-function applyFilters(){
+locationFilter.addEventListener(
+    "change",
+    applyFilters
+);
 
-    let filtered = internships;
+sortFilter.addEventListener(
+    "change",
+    applyFilters
+);
 
-    const search = searchInput.value.trim().toLowerCase();
-    const mode = modeFilter.value;
-    const company = companyFilter.value;
-    const location = locationFilter.value;
-    const sort = sortFilter.value;
 
-    filtered = filtered.filter(job => {
+// =========================================
+// APPLY FILTERS
+// =========================================
+
+function applyFilters() {
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+    const mode =
+        modeFilter.value;
+
+    const company =
+        companyFilter.value;
+
+    const location =
+        locationFilter.value;
+
+    const sort =
+        sortFilter.value;
+
+
+    // IMPORTANT:
+    // Create a NEW array so the original
+    // internships array is never modified.
+
+    let filtered = internships.filter(job => {
+
+        const companyName =
+            (job.company_name || "")
+                .toLowerCase();
+
+        const jobTitle =
+            (job.job_title || "")
+                .toLowerCase();
+
+        const skills =
+            (job.skills || "")
+                .toLowerCase();
+
+        const jobLocation =
+            (job.location || "")
+                .toLowerCase();
+
 
         const matchesSearch =
-            job.company_name.toLowerCase().includes(search) ||
-            job.job_title.toLowerCase().includes(search) ||
-            job.skills.toLowerCase().includes(search) ||
-            job.location.toLowerCase().includes(search);
+            companyName.includes(search) ||
+            jobTitle.includes(search) ||
+            skills.includes(search) ||
+            jobLocation.includes(search);
+
 
         const matchesMode =
-            !mode || job.mode === mode;
+            !mode ||
+            job.mode === mode;
+
 
         const matchesCompany =
-            !company || job.company_name === company;
+            !company ||
+            job.company_name === company;
+
 
         const matchesLocation =
-            !location || job.location === location;
+            !location ||
+            job.location === location;
 
-        return matchesSearch &&
-               matchesMode &&
-               matchesCompany &&
-               matchesLocation;
+
+        return (
+            matchesSearch &&
+            matchesMode &&
+            matchesCompany &&
+            matchesLocation
+        );
 
     });
 
-    // Sorting
 
-if (sort === "company") {
+    // =========================================
+    // SORTING
+    // =========================================
 
-    filtered.sort((a, b) =>
-        a.company_name.localeCompare(b.company_name)
-    );
+    if (sort === "") {
 
-}
+        /*
+         DEFAULT ORDER:
 
-else if (sort === "job") {
+         1. Open
+         2. Closing Soon
+         3. Expired
 
-    filtered.sort((a, b) =>
-        a.job_title.localeCompare(b.job_title)
-    );
+         Within each group:
+         nearest deadline first.
+        */
 
-}
+        filtered.sort((a, b) => {
 
-else if (sort === "deadline") {
+            const statusA =
+                getStatus(a.deadline);
 
-    filtered.sort((a, b) =>
-        new Date(a.deadline) - new Date(b.deadline)
-    );
+            const statusB =
+                getStatus(b.deadline);
 
-}
 
-else if (sort === "stipendHigh") {
+            if (
+                statusA.priority !==
+                statusB.priority
+            ) {
 
-    filtered.sort((a, b) =>
-        parseInt(b.stipend.replace(/\D/g, "")) -
-        parseInt(a.stipend.replace(/\D/g, ""))
-    );
+                return (
+                    statusA.priority -
+                    statusB.priority
+                );
 
-}
+            }
 
-else if (sort === "stipendLow") {
 
-    filtered.sort((a, b) =>
-        parseInt(a.stipend.replace(/\D/g, "")) -
-        parseInt(b.stipend.replace(/\D/g, ""))
-    );
+            return (
+                new Date(a.deadline) -
+                new Date(b.deadline)
+            );
 
-}
+        });
+
+    }
+
+
+    else if (sort === "company") {
+
+        filtered.sort((a, b) => {
+
+            return a.company_name
+                .localeCompare(
+                    b.company_name
+                );
+
+        });
+
+    }
+
+
+    else if (sort === "job") {
+
+        filtered.sort((a, b) => {
+
+            return a.job_title
+                .localeCompare(
+                    b.job_title
+                );
+
+        });
+
+    }
+
+
+    else if (sort === "deadline") {
+
+        filtered.sort((a, b) => {
+
+            return (
+                new Date(a.deadline) -
+                new Date(b.deadline)
+            );
+
+        });
+
+    }
+
+
+    else if (sort === "stipendHigh") {
+
+        filtered.sort((a, b) => {
+
+            const stipendA =
+                parseInt(
+                    (a.stipend || "")
+                        .replace(/\D/g, "")
+                ) || 0;
+
+            const stipendB =
+                parseInt(
+                    (b.stipend || "")
+                        .replace(/\D/g, "")
+                ) || 0;
+
+
+            return stipendB - stipendA;
+
+        });
+
+    }
+
+
+    else if (sort === "stipendLow") {
+
+        filtered.sort((a, b) => {
+
+            const stipendA =
+                parseInt(
+                    (a.stipend || "")
+                        .replace(/\D/g, "")
+                ) || 0;
+
+            const stipendB =
+                parseInt(
+                    (b.stipend || "")
+                        .replace(/\D/g, "")
+                ) || 0;
+
+
+            return stipendA - stipendB;
+
+        });
+
+    }
+
 
     displayInternships(filtered);
 
 }
 
-function saveInternship(id){
 
-    let saved = JSON.parse(localStorage.getItem("savedInternships")) || [];
+// =========================================
+// SAVE INTERNSHIP
+// =========================================
 
-    if(!saved.includes(id)){
+function saveInternship(id) {
+
+    let saved =
+        JSON.parse(
+            localStorage.getItem(
+                "savedInternships"
+            )
+        ) || [];
+
+
+    if (!saved.includes(id)) {
 
         saved.push(id);
 
-        localStorage.setItem("savedInternships", JSON.stringify(saved));
+        localStorage.setItem(
+            "savedInternships",
+            JSON.stringify(saved)
+        );
 
     }
 
-    displayInternships(internships);
+
+    // Re-run filters so the current
+    // search/filter selection stays active.
+
+    applyFilters();
 
 }
+

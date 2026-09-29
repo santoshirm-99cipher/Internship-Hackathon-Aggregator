@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Discussion | Internship & Hackathon Aggregator</title>
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/team-discussion.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="brand">
+            💜 Internship & Hackathon Aggregator
+        </div>
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">Dashboard</a>
+            <a href="internships.html">Internships</a>
+            <a href="hackathons.html">Hackathons</a>
+            <a href="team-matcher.html">🤝 Team Matcher</a>
+            <a href="saved.html">Saved</a>
+            <a href="profile.html">Profile</a>
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <h1>💬 Project Discussion</h1>
+
+        <p>
+            Discuss your project and collaborate with your teammates.
+        </p>
+
+    </section>
+
+
+    <!-- DISCUSSION -->
+
+    <section class="discussion-section">
+
+        <div class="discussion-card">
+
+            <div class="discussion-header">
+    <h2>👥 Team Discussion</h2>
+
+    <span id="teamInfo">
+        Loading team...
+    </span>
+
+    <div class="team-members">
+        <h3>👥 Team Members</h3>
+
+        <div id="teamMembersList">
+            Loading members...
+        </div>
+    </div>
+</div>
+        
+            <!-- MESSAGES -->
+
+            <div id="messagesContainer" class="messages-container">
+
+                <div class="loading-message">
+                    Loading messages...
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE FORM -->
+
+            <form id="messageForm" class="message-form">
+
+                <input
+                    type="text"
+                    id="messageInput"
+                    placeholder="Write a message..."
+                    autocomplete="off"
+                    required
+                >
+
+                <button type="submit">
+                    📤 Send
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <footer class="footer">
+
+        <p>
+            © 2026 Internship & Hackathon Aggregator
+        </p>
+
+    </footer>
+
+
+    <script src="js/logout.js"></script>
+    <script src="js/team-discussion.js"></script>
+
+</body>
+
+</html>

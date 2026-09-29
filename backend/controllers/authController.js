@@ -1,5 +1,6 @@
 const db = require("../config/db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
 
@@ -76,14 +77,31 @@ exports.login = (req, res) => {
             });
         }
 
-        res.status(200).json({
-            message: "Login Successful",
-            user
-        });
+        const token = jwt.sign(
+    {
+        id: user.id,
+        role: user.role
+    },
+    process.env.JWT_SECRET,
+    {
+        expiresIn: "2h"
+    }
+);
 
-    });
+res.status(200).json({
+    message: "Login Successful",
+    token,
+    user: {
+        id: user.id,
+        full_name: user.full_name,
+        email: user.email,
+        role: user.role
+    }
+});
 
-};
+    });   // ✅ closes db.query()
+
+};       // ✅ closes exports.login
 
 exports.getProfile = (req, res) => {
 

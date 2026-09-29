@@ -1,0 +1,159 @@
+/* ================================
+   ADMIN DASHBOARD
+================================ */
+
+body {
+    background: #F8F7FF;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.container h1 {
+    color: #7C3AED;
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+#welcome {
+    font-size: 18px;
+    color: #6B7280;
+    margin-bottom: 35px;
+}
+
+/* Admin Cards */
+.admin-card {
+    background: white;
+    padding: 28px;
+    margin-bottom: 25px;
+    border-radius: 18px;
+    border: 1px solid #E9E3FF;
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.08);
+}
+
+/* Two-column layout */
+.container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.container > .admin-card {
+    display: inline-block;
+    width: calc(50% - 15px);
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.container > .admin-card:nth-of-type(2) {
+    margin-left: 26px;
+}
+
+/* Buttons */
+
+.admin-card button,
+.container > button {
+    background: #7C3AED;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.admin-card button:hover,
+.container > button:hover {
+    background: #6D28D9;
+    transform: translateY(-2px);
+}
+
+/* Logout */
+
+.container > button:last-child {
+    background: #EF4444;
+    margin-top: 10px;
+}
+
+.container > button:last-child:hover {
+    background: #DC2626;
+}
+
+#searchInternships,
+#searchHackathons {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 15px;
+    margin: 10px 0 20px;
+    border: 1px solid #DDD6FE;
+    border-radius: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#searchInternships:focus,
+#searchHackathons:focus {
+    border-color: #8B5CF6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+/* ==========================================
+   ADMIN DASHBOARD GRID
+========================================== */
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 20px;
+}
+
+.admin-card {
+    margin-bottom: 0;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* ==========================================
+   ADMIN MANAGEMENT LIST
+========================================== */
+
+.admin-list-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.admin-list-grid .admin-card {
+    margin-bottom: 0;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .admin-list-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

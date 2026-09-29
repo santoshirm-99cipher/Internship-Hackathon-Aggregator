@@ -195,3 +195,49 @@ body {
     }
 
 }
+
+.application-cost-details {
+    margin: 25px 0;
+    padding: 20px;
+    background: #F8F7FF;
+    border: 1px solid #E9E3FF;
+    border-radius: 14px;
+}
+
+.application-cost-details h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #7C3AED;
+}
+
+.cost-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.cost-item {
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #E9E3FF;
+}
+
+.cost-item strong {
+    display: block;
+    color: #374151;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.cost-item span {
+    color: #7C3AED;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    .cost-grid {
+        grid-template-columns: 1fr;
+    }
+}

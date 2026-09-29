@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Internships</title>
+
+    <link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/admin.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>💼 Manage Internships</h1>
+
+    <button onclick="location.href='admin.html'">
+        ← Back to Admin Dashboard
+    </button>
+
+    <button onclick="showAddForm()">
+        ➕ Add Internship
+    </button>
+
+    <div id="formContainer"></div>
+
+    <hr>
+
+    <h2>Existing Internships</h2>
+
+<input
+    type="text"
+    id="searchInternships"
+    placeholder="🔍 Search by company, job title or location..."
+    oninput="searchInternships()"
+>
+
+<div id="internshipList" class="admin-list-grid">
+    Loading...
+</div>
+
+</div>
+
+
+<script>
+
+const API_URL = "http://localhost:5001/api/internships";
+
+let allInternships = [];
+
+
+// ==========================================
+// CHECK ADMIN
+// ==========================================
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user || user.role !== "admin") {
+
+    alert("Access Denied ❌");
+
+    window.location.href = "dashboard.html";
+
+}
+
+
+// ==========================================
+// LOAD INTERNSHIPS
+// ==========================================
+
+async function loadInternships() {
+
+    try {
+
+        const response = await fetch(API_URL);
+
+        const internships = await response.json();
+        allInternships = internships;
+
+        const list =
+            document.getElementById("internshipList");
+
+        list.innerHTML = "";
+
+        internships.forEach(job => {
+
+            const deadline = job.deadline
+                ? String(job.deadline).split("T")[0]
+                : "Not specified";
+
+            list.innerHTML += `
+
+                <div class="admin-card">
+
+                    <h3>${job.company_name}</h3>
+
+                    <p>
+                        <strong>${job.job_title}</strong>
+                    </p>
+
+                    <p>
+                        📍 ${job.location || "Not specified"}
+                    </p>
+
+                    <p>
+                        💰 ${job.stipend || "Not specified"}
+                    </p>
+
+                    <p>
+                        📅 ${deadline}
+                    </p>
+
+                    <button
+                        onclick="editInternship(${job.id})">
+
+                        ✏️ Edit
+
+                    </button>
+
+                    <button
+                        onclick="deleteInternship(${job.id})">
+
+                        🗑️ Delete
+
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById("internshipList").innerHTML =
+            "Unable to load internships.";
+
+    }
+
+}
+
+
+// ==========================================
+// ADD FORM
+// ==========================================
+
+function showAddForm() {
+
+    document.getElementById("formContainer").innerHTML = `
+
+        <div class="admin-card">
+
+            <h2>➕ Add Internship</h2>
+
+            <input
+                id="company"
+                placeholder="Company Name">
+
+            <input
+                id="jobTitle"
+                placeholder="Job Title">
+
+            <input
+                id="location"
+                placeholder="Location">
+
+            <input
+                id="mode"
+                placeholder="Mode">
+
+            <input
+                id="stipend"
+                placeholder="Stipend">
+
+            <input
+                id="deadline"
+                type="date">
+
+            <input
+                id="applyLink"
+                placeholder="Application Link">
+
+            <br><br>
+
+            <button onclick="addInternship()">
+
+                💾 Save Internship
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+// ==========================================
+// ADD INTERNSHIP
+// ==========================================
+
+async function addInternship() {
+
+    const internship = {
+
+        company_name:
+            document.getElementById("company").value,
+
+        job_title:
+            document.getElementById("jobTitle").value,
+
+        location:
+            document.getElementById("location").value,
+
+        mode:
+            document.getElementById("mode").value,
+
+        stipend:
+            document.getElementById("stipend").value,
+
+        deadline:
+            document.getElementById("deadline").value,
+
+        apply_link:
+            document.getElementById("applyLink").value
+
+    };
+
+
+    try {
+
+        const response = await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+
+},
+
+            body: JSON.stringify(internship)
+
+        });
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Unable to add internship."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Internship added successfully! ✅"
+        );
+
+
+        document.getElementById(
+            "formContainer"
+        ).innerHTML = "";
+
+
+        loadInternships();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to connect to server."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// EDIT INTERNSHIP
+// ==========================================
+
+async function editInternship(id) {
+
+    try {
+
+        const response = await fetch(API_URL);
+
+        const internships = await response.json();
+
+        const job =
+            internships.find(item => item.id == id);
+
+
+        if (!job) {
+
+            alert("Internship not found.");
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "formContainer"
+        ).innerHTML = `
+
+            <div class="admin-card">
+
+                <h2>✏️ Edit Internship</h2>
+
+                <input
+                    id="company"
+                    value="${job.company_name || ""}"
+                    placeholder="Company Name">
+
+
+                <input
+                    id="jobTitle"
+                    value="${job.job_title || ""}"
+                    placeholder="Job Title">
+
+
+                <input
+                    id="location"
+                    value="${job.location || ""}"
+                    placeholder="Location">
+
+
+                <input
+                    id="mode"
+                    value="${job.mode || ""}"
+                    placeholder="Mode">
+
+
+                <input
+                    id="stipend"
+                    value="${job.stipend || ""}"
+                    placeholder="Stipend">
+
+
+                <input
+                    id="deadline"
+                    type="date"
+                    value="${
+                        job.deadline
+                        ? String(job.deadline).split("T")[0]
+                        : ""
+                    }">
+
+
+                <input
+                    id="applyLink"
+                    value="${job.apply_link || ""}"
+                    placeholder="Application Link">
+
+
+                <br><br>
+
+
+                <button
+                    onclick="updateInternship(${id})">
+
+                    💾 Save Changes
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to load internship."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// UPDATE INTERNSHIP
+// ==========================================
+
+async function updateInternship(id) {
+
+    const updatedInternship = {
+
+        company_name:
+            document.getElementById("company").value,
+
+        job_title:
+            document.getElementById("jobTitle").value,
+
+        location:
+            document.getElementById("location").value,
+
+        mode:
+            document.getElementById("mode").value,
+
+        stipend:
+            document.getElementById("stipend").value,
+
+        deadline:
+            document.getElementById("deadline").value,
+
+        apply_link:
+            document.getElementById("applyLink").value
+
+    };
+
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/${id}`,
+            {
+
+                method: "PUT",
+
+                headers: {
+
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+
+},
+
+                body:
+                    JSON.stringify(updatedInternship)
+
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Update failed."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Internship updated successfully! ✅"
+        );
+
+
+        document.getElementById(
+            "formContainer"
+        ).innerHTML = "";
+
+
+        loadInternships();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to update internship."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// DELETE INTERNSHIP
+// ==========================================
+
+async function deleteInternship(id) {
+
+    if (!confirm("Are you sure you want to delete this internship?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`${API_URL}/${id}`, {
+
+    method: "DELETE",
+
+    headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+
+});
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Delete failed.");
+            return;
+        }
+
+        alert("Internship deleted successfully! ✅");
+
+        loadInternships();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Unable to delete internship.");
+
+    }
+}
+
+
+// ==========================================
+// START
+// ==========================================
+
+loadInternships();
+
+// ==========================================
+// SEARCH INTERNSHIPS
+// ==========================================
+
+function searchInternships() {
+
+    const search =
+        document.getElementById("searchInternships")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const cards =
+        document.querySelectorAll(
+            "#internshipList .admin-card"
+        );
+
+    cards.forEach(card => {
+
+        const text =
+            card.textContent.toLowerCase();
+
+        if (text.includes(search)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>

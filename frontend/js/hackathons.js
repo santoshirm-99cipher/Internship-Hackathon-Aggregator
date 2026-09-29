@@ -24,7 +24,7 @@ fetch("http://localhost:5001/api/hackathons")
 
         hackathons = data;
 
-        displayHackathons(hackathons);
+        applyFilters();
 
     })
 
@@ -36,6 +36,61 @@ fetch("http://localhost:5001/api/hackathons")
         );
 
     });
+
+    // ================= HACKATHON STATUS =================
+
+// ================= HACKATHON STATUS =================
+
+function getHackathonStatus(deadline) {
+
+    if (!deadline) {
+        return {
+            text: "Open",
+            priority: 1
+        };
+    }
+
+    // Get only YYYY-MM-DD
+    const dateString =
+        String(deadline).split("T")[0];
+
+    const deadlineDate =
+        new Date(dateString + "T23:59:59");
+
+    if (isNaN(deadlineDate.getTime())) {
+        return {
+            text: "Open",
+            priority: 1
+        };
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const diffDays = Math.ceil(
+        (deadlineDate - today) /
+        (1000 * 60 * 60 * 24)
+    );
+
+    if (diffDays < 0) {
+        return {
+            text: "Expired",
+            priority: 3
+        };
+    }
+
+    if (diffDays <= 7) {
+        return {
+            text: "Closing Soon",
+            priority: 2
+        };
+    }
+
+    return {
+        text: "Open",
+        priority: 1
+    };
+}
 
 
 // ================= DISPLAY =================
@@ -54,52 +109,50 @@ function displayHackathons(list) {
 
         // Deadline status
 
-        const today = new Date();
+        const dateString =
+    String(hackathon.deadline).split("T")[0];
 
-        const deadline =
-            new Date(hackathon.deadline);
+const deadline =
+    new Date(dateString + "T23:59:59");
 
-        const diffDays =
-            Math.ceil(
-                (deadline - today) /
-                (1000 * 60 * 60 * 24)
-            );
+const statusInfo =
+    getHackathonStatus(hackathon.deadline);
 
-            let status = "";
+const diffDays =
+    Math.ceil(
+        (deadline - new Date()) /
+        (1000 * 60 * 60 * 24)
+    );
 
-if (diffDays < 0) {
+let status = "";
 
-    status =
-        `<span class="expired">
+if (statusInfo.priority === 3) {
+
+    status = `
+        <span class="expired">
             🔴 Expired
-        </span>`;
+        </span>
+    `;
 
 }
 
-else if (diffDays === 0) {
+else if (statusInfo.priority === 2) {
 
-    status =
-        `<span class="closing">
-            🟡 Closing Today
-        </span>`;
-
-}
-
-else if (diffDays <= 7) {
-
-    status =
-        `<span class="closing">
-            🟡 Closing Soon • ${diffDays} day${diffDays === 1 ? "" : "s"} left
-        </span>`;
+    status = `
+        <span class="closing">
+            🟡 Closing Soon
+        </span>
+    `;
 
 }
 
 else {
 
-    status =
-        `<span class="open">
-            🟢 Open • ${diffDays} days left
-        </span>`;
+    status = `
+        <span class="open">
+            🟢 Open
+        </span>
+    `;
 
 }
 
@@ -128,7 +181,9 @@ else {
 
                 <p>
                     <strong>Deadline:</strong>
-                    ${deadline.toLocaleDateString("en-IN")}
+                    ${new Date(
+    dateString + "T00:00:00"
+).toLocaleDateString("en-IN")}
                 </p>
 
                 ${status}
@@ -159,8 +214,8 @@ else {
                         onclick="saveHackathon(${hackathon.id})">
 
                         ${saved.includes(hackathon.id)
-                            ? "💜 Saved"
-                            : "❤️ Save"}
+                            ? " Saved"
+                            : " Save"}
 
                     </button>
 
@@ -224,90 +279,143 @@ function applyFilters() {
 
     let filtered = [...hackathons];
 
-
     const search =
         searchInput.value
             .trim()
             .toLowerCase();
 
-
     const mode =
         modeFilter.value;
-
 
     const sort =
         sortFilter.value;
 
 
-    // Search
+    // ================= SEARCH =================
 
     filtered = filtered.filter(event => {
 
         return (
-
-            event.event_name
+            (event.event_name || "")
                 .toLowerCase()
                 .includes(search)
 
             ||
 
-            event.organizer
+            (event.organizer || "")
                 .toLowerCase()
                 .includes(search)
-
         );
 
     });
 
 
-    // Mode
+    // ================= MODE =================
 
     if (mode) {
 
-        filtered =
-            filtered.filter(
-                event =>
-                    event.mode === mode
-            );
-
-    }
-
-
-    // Sorting
-
-    if (sort === "deadline") {
-
-        filtered.sort(
-            (a, b) =>
-                new Date(a.deadline) -
-                new Date(b.deadline)
+        filtered = filtered.filter(
+            event => event.mode === mode
         );
 
     }
 
+
+    // ================= SORTING =================
+
+    // DEFAULT:
+    // Open → Closing Soon → Expired
+
+    if (sort === "") {
+
+        filtered.sort((a, b) => {
+
+            const statusA =
+                getHackathonStatus(a.deadline);
+
+            const statusB =
+                getHackathonStatus(b.deadline);
+
+
+            // Status priority
+            // Open = 1
+            // Closing Soon = 2
+            // Expired = 3
+
+            if (
+                statusA.priority !==
+                statusB.priority
+            ) {
+
+                return (
+                    statusA.priority -
+                    statusB.priority
+                );
+
+            }
+
+
+            // Same status:
+            // nearest deadline first
+
+            return (
+                new Date(a.deadline) -
+                new Date(b.deadline)
+            );
+
+        });
+
+    }
+
+
+    // ================= DEADLINE =================
+
+    else if (sort === "deadline") {
+
+        filtered.sort((a, b) => {
+
+            return (
+                new Date(a.deadline) -
+                new Date(b.deadline)
+            );
+
+        });
+
+    }
+
+
+    // ================= NAME =================
 
     else if (sort === "name") {
 
-        filtered.sort(
-            (a, b) =>
-                a.event_name.localeCompare(
-                    b.event_name
-                )
-        );
+        filtered.sort((a, b) => {
+
+            return a.event_name.localeCompare(
+                b.event_name
+            );
+
+        });
 
     }
 
+
+    // ================= PRIZE =================
 
     else if (sort === "prizeHigh") {
 
-        filtered.sort(
-            (a, b) =>
+        filtered.sort((a, b) => {
+
+            return (
                 getPrize(b.prize) -
                 getPrize(a.prize)
-        );
+            );
+
+        });
 
     }
 
+
+    // ================= DISPLAY =================
 
     displayHackathons(filtered);
 
@@ -328,6 +436,34 @@ function getPrize(prize) {
 
 
 // ================= SAVE =================
+function saveHackathon(id) {
+
+    let saved =
+        JSON.parse(
+            localStorage.getItem("savedHackathons")
+        ) || [];
+
+    id = Number(id);
+
+    if (saved.includes(id)) {
+
+        saved = saved.filter(
+            savedId => savedId !== id
+        );
+
+    } else {
+
+        saved.push(id);
+
+    }
+
+    localStorage.setItem(
+        "savedHackathons",
+        JSON.stringify(saved)
+    );
+
+    applyFilters();
+}
 
 function getCurrentlyDisplayedHackathons() {
 
@@ -379,37 +515,59 @@ function getCurrentlyDisplayedHackathons() {
 
     // Sorting
 
-    if (sort === "deadline") {
+    // ================= SORTING =================
 
-        filtered.sort(
-            (a, b) =>
-                new Date(a.deadline) -
-                new Date(b.deadline)
-        );
+if (sort === "") {
 
-    }
+    filtered.sort((a, b) => {
 
-    else if (sort === "name") {
+        const statusA =
+            getHackathonStatus(a.deadline);
 
-        filtered.sort(
-            (a, b) =>
-                a.event_name.localeCompare(
-                    b.event_name
-                )
-        );
+        const statusB =
+            getHackathonStatus(b.deadline);
 
-    }
+        if (statusA.priority !== statusB.priority) {
+            return statusA.priority - statusB.priority;
+        }
 
-    else if (sort === "prizeHigh") {
+        return new Date(a.deadline) -
+               new Date(b.deadline);
 
-        filtered.sort(
-            (a, b) =>
-                getPrize(b.prize) -
-                getPrize(a.prize)
-        );
+    });
 
-    }
+}
 
+else if (sort === "deadline") {
+
+    filtered.sort(
+        (a, b) =>
+            new Date(a.deadline) -
+            new Date(b.deadline)
+    );
+
+}
+
+else if (sort === "name") {
+
+    filtered.sort(
+        (a, b) =>
+            a.event_name.localeCompare(
+                b.event_name
+            )
+    );
+
+}
+
+else if (sort === "prizeHigh") {
+
+    filtered.sort(
+        (a, b) =>
+            getPrize(b.prize) -
+            getPrize(a.prize)
+    );
+
+}
     return filtered;
 }
 

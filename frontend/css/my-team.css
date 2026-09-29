@@ -1,0 +1,253 @@
+/* ==============================
+   MY TEAM PAGE
+   ============================== */
+
+.team-stats {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card span {
+    font-size: 32px;
+}
+
+.stat-card h3 {
+    margin: 10px 0 5px;
+    font-size: 28px;
+}
+
+.stat-card p {
+    margin: 0;
+}
+
+
+/* ==============================
+   TEAM MEMBERS
+   ============================== */
+
+#teamContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+
+/* ==============================
+   TEAMMATE CARD
+   ============================== */
+
+.teammate-card {
+    background: white;
+    padding: 22px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.teammate-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #f0eaff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.teammate-card h3 {
+    margin: 0;
+}
+
+.teammate-card .role {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.info {
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.connected {
+    margin-top: 18px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    background: #eaf8ef;
+    color: #218838;
+}
+
+
+/* ==============================
+   EMPTY / LOADING
+   ============================== */
+
+#teamContainer > p {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+
+/* ==============================
+   MOBILE
+   ============================== */
+
+@media (max-width: 768px) {
+
+    .team-stats {
+        grid-template-columns: 1fr;
+    }
+
+    #teamContainer {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.contact-email {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f5f1ff;
+    border-radius: 8px;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.contact-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #6c3fb5;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.contact-btn:hover {
+    opacity: 0.9;
+}
+
+.contact-unavailable {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    color: #777;
+    text-align: center;
+}
+
+.contact-email {
+    margin-top: 18px;
+    padding: 12px;
+    background: #f5f1ff;
+    border-radius: 8px;
+    font-size: 15px;
+    word-break: break-word;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.contact-btn {
+    flex: 1;
+    padding: 11px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #6c3fb5;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.contact-btn:hover {
+    opacity: 0.9;
+}
+
+.gmail-btn {
+    background: #4285f4;
+}
+
+.contact-unavailable {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    color: #777;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+
+    .contact-actions {
+        flex-direction: column;
+    }
+
+}
+
+.remove-teammate-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 11px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    color: #d9534f;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.remove-teammate-btn:hover {
+    background: #fff5f5;
+    border-color: #d9534f;
+}
+
+.discussion-link {
+    text-align: center;
+    margin: 25px 0 35px;
+}
+
+.discussion-link a {
+    display: inline-block;
+    padding: 14px 28px;
+    background: #6c3fb5;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.discussion-link a:hover {
+    opacity: 0.9;
+}

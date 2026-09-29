@@ -1,93 +1,140 @@
 const container = document.getElementById("detailsContainer");
 
 const params = new URLSearchParams(window.location.search);
-
 const id = params.get("id");
 
-fetch(`http://localhost:5001/api/internships`)
-.then(res=>res.json())
-.then(data=>{
+fetch("http://localhost:5001/api/internships")
+    .then(res => res.json())
+    .then(data => {
 
-    const job = data.find(item=>item.id == id);
+        const job = data.find(item => item.id == id);
 
-    if(!job){
+        if (!job) {
+            container.innerHTML = "<h2>Internship Not Found</h2>";
+            return;
+        }
 
-        container.innerHTML="<h2>Internship Not Found</h2>";
+        let skillsHTML = "";
 
-        return;
+        if (job.skills) {
+            job.skills.split(",").forEach(skill => {
+                skillsHTML += `
+                    <span class="skill">
+                        ${skill.trim()}
+                    </span>
+                `;
+            });
+        }
 
-    }
+        const deadline = job.deadline
+            ? new Date(job.deadline).toLocaleDateString("en-IN")
+            : "Deadline not published";
 
-    let skillsHTML="";
+        container.innerHTML = `
 
-    if(job.skills){
+            <div class="details">
 
-        job.skills.split(",").forEach(skill=>{
+                <div class="logo">
+                    ${job.company_name.charAt(0)}
+                </div>
 
-            skillsHTML += `<span class="skill">${skill.trim()}</span>`;
+                <h1>${job.job_title}</h1>
 
-        });
+                <h2>${job.company_name}</h2>
 
-    }
+                <p class="info">
+                    📍 ${job.location || "Not specified"}
+                </p>
 
-    container.innerHTML=`
+                <p class="info">
+                    💻 ${job.mode || "Not specified"}
+                </p>
 
-<div class="details">
+                <p class="info">
+                    💰 ${job.stipend || "Not specified"}
+                </p>
 
-<div class="logo">
+                <p class="info">
+                    📅 Apply Before: ${deadline}
+                </p>
 
-${job.company_name.charAt(0)}
+                <div class="application-cost-details">
+
+    <h3>⏱️ Application Cost & Process</h3>
+
+    <div class="cost-grid">
+
+        <div class="cost-item">
+            <strong>⏱️ Total Time</strong>
+            <span>~${job.application_time_hours || 0} hours</span>
+        </div>
+
+        <div class="cost-item">
+            <strong>🎯 Interview Rounds</strong>
+            <span>${job.interview_rounds || 0} rounds</span>
+        </div>
+
+        <div class="cost-item">
+            <strong>📝 Assignment</strong>
+            <span>${job.assignment_hours || 0} hours</span>
+        </div>
+
+        <div class="cost-item">
+            <strong>🧪 Assessment</strong>
+            <span>${job.assessment_minutes || 0} minutes</span>
+        </div>
+
+        <div class="cost-item">
+            <strong>📆 Process Duration</strong>
+            <span>~${job.process_days || 0} days</span>
+        </div>
+
+        ${
+            job.response_rate !== null && job.response_rate !== undefined
+            ? `
+            <div class="cost-item">
+                <strong>📩 Response Rate</strong>
+                <span>${job.response_rate}%</span>
+            </div>
+            `
+            : ""
+        }
+
+    </div>
 
 </div>
 
-<h1>${job.job_title}</h1>
+                <h3>Skills Required</h3>
 
-<h2>${job.company_name}</h2>
+                <div class="skills">
+                    ${skillsHTML}
+                </div>
 
-<p class="info">📍 ${job.location}</p>
+                <h3>Description</h3>
 
-<p class="info">💻 ${job.mode}</p>
+                <p>
+                    ${job.description || "No description available."}
+                </p>
 
-<p class="info">💰 ${job.stipend}</p>
+                <a
+                    href="${job.apply_link}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="apply">
 
-<p class="info">
+                    Apply Now →
 
-📅 Apply Before
+                </a>
 
-${new Date(job.deadline).toLocaleDateString()}
+            </div>
+        `;
+    })
+    .catch(error => {
 
-</p>
+        console.error("Error loading internship:", error);
 
-<h3>Skills Required</h3>
-
-<div class="skills">
-
-${skillsHTML}
-
-</div>
-
-<h3>Description</h3>
-
-<p>
-
-${job.description}
-
-</p>
-
-<a
-
-href="${job.apply_link}"
-
-target="_blank"
-
-class="apply">
-
-Apply Now →
-
-</a>
-
-</div>
-
-`;
-
-});
+        container.innerHTML = `
+            <h2>Unable to load internship</h2>
+            <p>Please try again later.</p>
+        `;
+    });

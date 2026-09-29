@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Invitation</title>
+</head>
+
+<body>
+
+<h2>Test Accept Invitation</h2>
+
+<button onclick="acceptInvitation()">
+    Accept Invitation #1
+</button>
+
+<script>
+
+async function acceptInvitation() {
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:5001/api/team-invitations/1/status",
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    receiver_id: 3,
+                    status: "Accepted"
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (response.ok) {
+
+            alert(
+                "✅ " + data.message
+            );
+
+        } else {
+
+            alert(
+                "❌ " + data.message
+            );
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "❌ Could not connect to backend"
+        );
+    }
+}
+
+</script>
+
+</body>
+</html>

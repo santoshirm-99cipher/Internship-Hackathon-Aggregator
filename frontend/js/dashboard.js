@@ -1,96 +1,143 @@
 // ================= DASHBOARD =================
+
 console.log("DASHBOARD.JS IS RUNNING");
+
+
+// ==================================================
+// ================= LOAD DASHBOARD ==================
+// ==================================================
 
 async function loadDashboard() {
 
     try {
 
-        // Get internships
-        const internshipResponse =
-            await fetch("http://localhost:5001/api/internships");
+        // ================= GET INTERNSHIPS =================
 
-        const internships =
-            await internshipResponse.json();
+        const internshipResponse = await fetch(
+            "http://localhost:5001/api/internships"
+        );
 
-            // ================= FEATURED INTERNSHIP =================
+        if (!internshipResponse.ok) {
+            throw new Error("Could not load internships");
+        }
 
-const featuredInternship = internships[0];
-
-if (featuredInternship) {
-
-    document.getElementById("featuredInternship").innerHTML = `
-
-        <h3>
-            ${featuredInternship.job_title}
-        </h3>
-
-        <p class="company-name">
-            ${featuredInternship.company_name}
-        </p>
-
-        <div class="opportunity-info">
-
-            <span>📍 ${featuredInternship.location}</span>
-
-            <span>💰 ${featuredInternship.stipend}</span>
-
-        </div>
-
-        <a href="internships.html" class="card-button">
-            Explore Internship →
-        </a>
-
-    `;
-
-}
+        const internships = await internshipResponse.json();
 
 
-        // Get hackathons
-        const hackathonResponse =
-            await fetch("http://localhost:5001/api/hackathons");
+        // ================= FEATURED INTERNSHIP =================
 
-        const hackathons =
-            await hackathonResponse.json();
+        const featuredInternship = internships[0];
 
-            // ================= FEATURED HACKATHON =================
+        const featuredInternshipContainer =
+            document.getElementById("featuredInternship");
 
-const featuredHackathon = hackathons[0];
+        if (featuredInternship && featuredInternshipContainer) {
 
-if (featuredHackathon) {
+            featuredInternshipContainer.innerHTML = `
 
-    document.getElementById("featuredHackathon").innerHTML = `
+                <h3>
+                    ${featuredInternship.job_title}
+                </h3>
 
-        <h3>
-            ${featuredHackathon.event_name}
-        </h3>
+                <p class="company-name">
+                    ${featuredInternship.company_name}
+                </p>
 
-        <p class="company-name">
-            ${featuredHackathon.organizer}
-        </p>
+                <div class="opportunity-info">
 
-        <div class="opportunity-info">
+                    <span>
+                        📍 ${featuredInternship.location}
+                    </span>
 
-            <span>💻 ${featuredHackathon.mode}</span>
+                    <span>
+                        💰 ${featuredInternship.stipend}
+                    </span>
 
-            <span>🏆 ${featuredHackathon.prize}</span>
+                </div>
 
-        </div>
+                <a
+                    href="internships.html"
+                    class="card-button">
 
-        <a href="hackathons.html" class="card-button">
-            View Hackathon →
-        </a>
+                    Explore Internship →
 
-    `;
+                </a>
 
-}
+            `;
+        }
+
+
+        // ================= GET HACKATHONS =================
+
+        const hackathonResponse = await fetch(
+            "http://localhost:5001/api/hackathons"
+        );
+
+        if (!hackathonResponse.ok) {
+            throw new Error("Could not load hackathons");
+        }
+
+        const hackathons = await hackathonResponse.json();
+
+
+        // ================= FEATURED HACKATHON =================
+
+        const featuredHackathon = hackathons[0];
+
+        const featuredHackathonContainer =
+            document.getElementById("featuredHackathon");
+
+        if (featuredHackathon && featuredHackathonContainer) {
+
+            featuredHackathonContainer.innerHTML = `
+
+                <h3>
+                    ${featuredHackathon.event_name}
+                </h3>
+
+                <p class="company-name">
+                    ${featuredHackathon.organizer}
+                </p>
+
+                <div class="opportunity-info">
+
+                    <span>
+                        💻 ${featuredHackathon.mode}
+                    </span>
+
+                    <span>
+                        🏆 ${featuredHackathon.prize}
+                    </span>
+
+                </div>
+
+                <a
+                    href="hackathons.html"
+                    class="card-button">
+
+                    View Hackathon →
+
+                </a>
+
+            `;
+        }
+
 
         // ================= COUNTS =================
 
-        document.getElementById("internshipCount").innerText =
-            internships.length;
+        const internshipCount =
+            document.getElementById("internshipCount");
 
-        document.getElementById("hackathonCount").innerText =
-            hackathons.length;
+        const hackathonCount =
+            document.getElementById("hackathonCount");
+
+        if (internshipCount) {
+            internshipCount.innerText = internships.length;
+        }
+
+        if (hackathonCount) {
+            hackathonCount.innerText = hackathons.length;
+        }
 
 
         // ================= SAVED =================
@@ -105,79 +152,157 @@ if (featuredHackathon) {
                 localStorage.getItem("savedHackathons")
             ) || [];
 
-        document.getElementById("savedCount").innerText =
-            savedInternships.length +
-            savedHackathons.length;
+        const savedCount =
+            document.getElementById("savedCount");
+
+        if (savedCount) {
+
+            savedCount.innerText =
+                savedInternships.length +
+                savedHackathons.length;
+
+        }
 
 
         // ================= LATEST INTERNSHIPS =================
 
         let internshipHTML = "";
 
-        internships.slice(0, 3).forEach(job => {
+        internships
+            .slice(0, 3)
+            .forEach(job => {
 
-            internshipHTML += `
-                <div class="latest-item">
+                internshipHTML += `
 
-                    <strong>${job.company_name}</strong>
+                    <div class="latest-item">
 
-                    <p>${job.job_title}</p>
+                        <strong>
+                            ${job.company_name}
+                        </strong>
 
-                    <span>📍 ${job.location}</span>
+                        <p>
+                            ${job.job_title}
+                        </p>
 
-                    <br>
+                        <span>
+                            📍 ${job.location}
+                        </span>
 
-                    <a href="internships.html">
-                        View Internship →
-                    </a>
+                        <br>
 
-                    <hr>
+                        <a href="internships.html">
+                            View Internship →
+                        </a>
 
-                </div>
-            `;
+                        <hr>
 
-        });
+                    </div>
 
-        document.getElementById("latestInternships").innerHTML =
-            internshipHTML;
+                `;
+
+            });
+
+
+        const latestInternships =
+            document.getElementById(
+                "latestInternships"
+            );
+
+        if (latestInternships) {
+
+            latestInternships.innerHTML =
+                internshipHTML;
+
+        }
 
 
         // ================= LATEST HACKATHONS =================
 
         let hackathonHTML = "";
 
-        hackathons.slice(0, 3).forEach(event => {
+        hackathons
+            .slice(0, 3)
+            .forEach(event => {
 
-            hackathonHTML += `
-                <div class="latest-item">
+                hackathonHTML += `
 
-                    <strong>${event.event_name}</strong>
+                    <div class="latest-item">
 
-                    <p>${event.organizer}</p>
+                        <strong>
+                            ${event.event_name}
+                        </strong>
 
-                    <span>🏆 ${event.prize}</span>
+                        <p>
+                            ${event.organizer}
+                        </p>
 
-                    <br>
+                        <span>
+                            🏆 ${event.prize}
+                        </span>
 
-                    <a href="hackathons.html">
-                        View Hackathon →
-                    </a>
+                        <br>
 
-                    <hr>
+                        <a href="hackathons.html">
+                            View Hackathon →
+                        </a>
 
-                </div>
-            `;
+                        <hr>
 
-        });
+                    </div>
 
-        document.getElementById("latestHackathons").innerHTML =
-            hackathonHTML;
+                `;
+
+            });
+
+
+        const latestHackathons =
+            document.getElementById(
+                "latestHackathons"
+            );
+
+        if (latestHackathons) {
+
+            latestHackathons.innerHTML =
+                hackathonHTML;
+
+        }
 
 
         // ================= DEADLINES =================
 
+        /*
+            Only internships with a REAL deadline
+            appear in the deadline section.
+        */
+
+        const validDeadlineInternships =
+            internships.filter(job => {
+
+                if (
+                    job.deadline === null ||
+                    job.deadline === undefined ||
+                    job.deadline === "" ||
+                    job.deadline === "0000-00-00"
+                ) {
+
+                    return false;
+
+                }
+
+                const date =
+                    new Date(job.deadline);
+
+                return !isNaN(
+                    date.getTime()
+                );
+
+            });
+
+
+        // ================= SORT DEADLINES =================
+
         const sortedInternships =
-            [...internships].sort(
+            [...validDeadlineInternships].sort(
                 (a, b) =>
                     new Date(a.deadline) -
                     new Date(b.deadline)
@@ -186,39 +311,83 @@ if (featuredHackathon) {
 
         let deadlineHTML = "";
 
-        sortedInternships.slice(0, 5).forEach(job => {
 
-            const deadline =
-                new Date(job.deadline).toLocaleDateString(
-                    "en-IN",
-                    {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric"
-                    }
-                );
+        // ================= SHOW 5 DEADLINES =================
 
-            deadlineHTML += `
-                <div class="deadline-item">
+        sortedInternships
+            .slice(0, 5)
+            .forEach(job => {
 
-                    <strong>${job.company_name}</strong>
+                const deadline =
+                    new Date(job.deadline)
+                        .toLocaleDateString(
+                            "en-IN",
+                            {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric"
+                            }
+                        );
 
-                    <p>${job.job_title}</p>
 
-                    <span>
-                        📅 Deadline: ${deadline}
-                    </span>
+                deadlineHTML += `
+
+                    <div class="deadline-item">
+
+                        <strong>
+                            ${job.company_name}
+                        </strong>
+
+                        <p>
+                            ${job.job_title}
+                        </p>
+
+                        <span>
+                            📅 Deadline: ${deadline}
+                        </span>
+
+                    </div>
+
+                    <hr>
+
+                `;
+
+            });
+
+
+        // ================= NO DEADLINES =================
+
+        if (sortedInternships.length === 0) {
+
+            deadlineHTML = `
+
+                <div class="no-deadlines">
+
+                    <p>
+                        No upcoming deadlines available.
+                    </p>
 
                 </div>
 
-                <hr>
             `;
 
-        });
+        }
 
-        document.getElementById("deadlineList").innerHTML =
-            deadlineHTML;
 
+        const deadlineList =
+            document.getElementById(
+                "deadlineList"
+            );
+
+        if (deadlineList) {
+
+            deadlineList.innerHTML =
+                deadlineHTML;
+
+        }
+
+
+        // ================= CONSOLE =================
 
         console.log(
             "Dashboard loaded successfully"
@@ -232,6 +401,11 @@ if (featuredHackathon) {
         console.log(
             "Hackathons:",
             hackathons.length
+        );
+
+        console.log(
+            "Valid deadlines:",
+            validDeadlineInternships.length
         );
 
     }
@@ -248,22 +422,38 @@ if (featuredHackathon) {
 }
 
 
-// ================= START DASHBOARD =================
-
-loadDashboard();
-
-// ================= RECOMMENDED OPPORTUNITIES =================
+// ==================================================
+// ================= RECOMMENDATIONS =================
+// ==================================================
 
 function loadRecommendations() {
 
     const container =
-        document.getElementById("recommendedContainer");
+        document.getElementById(
+            "recommendedContainer"
+        );
 
-    if (!container) return;
 
-    // Get student's profile
+    if (!container) {
+
+        console.log(
+            "Recommendation container not found."
+        );
+
+        return;
+
+    }
+
+
+    // ================= GET PROFILE =================
+
     const profile =
-        JSON.parse(localStorage.getItem("profile")) || {};
+        JSON.parse(
+            localStorage.getItem("profile")
+        ) || {};
+
+
+    // ================= USER SKILLS =================
 
     const userSkills =
         (profile.skills || "")
@@ -272,57 +462,97 @@ function loadRecommendations() {
             .map(skill => skill.trim())
             .filter(skill => skill !== "");
 
+
+    // ================= USER LOCATION =================
+
     const preferredLocation =
         (profile.location || "")
             .toLowerCase()
             .trim();
 
 
-    // Get internships
-    fetch("http://localhost:5001/api/internships")
+    // ================= GET INTERNSHIPS =================
 
-        .then(response => response.json())
+    fetch(
+        "http://localhost:5001/api/internships"
+    )
+
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error(
+                    "Could not load internships"
+                );
+            }
+
+            return response.json();
+
+        })
 
         .then(internships => {
 
+
+            // ================= CALCULATE MATCH =================
+
             const recommendations =
                 internships
+
                     .map(job => {
 
                         let score = 0;
+
+
+                        // ================= JOB SKILLS =================
 
                         const jobSkills =
                             (job.skills || "")
                                 .toLowerCase()
                                 .split(",")
-                                .map(skill => skill.trim());
+                                .map(skill =>
+                                    skill.trim()
+                                )
+                                .filter(skill =>
+                                    skill !== ""
+                                );
 
 
-                        // Match skills
-                        userSkills.forEach(userSkill => {
+                        // ================= SKILL MATCH =================
 
-                            jobSkills.forEach(jobSkill => {
+                        userSkills.forEach(
+                            userSkill => {
 
-                                if (
-                                    jobSkill.includes(userSkill) ||
-                                    userSkill.includes(jobSkill)
-                                ) {
+                                jobSkills.forEach(
+                                    jobSkill => {
 
-                                    score += 2;
+                                        if (
+                                            jobSkill.includes(
+                                                userSkill
+                                            ) ||
+                                            userSkill.includes(
+                                                jobSkill
+                                            )
+                                        ) {
 
-                                }
+                                            score += 2;
 
-                            });
+                                        }
 
-                        });
+                                    }
+                                );
+
+                            }
+                        );
 
 
-                        // Match location
+                        // ================= LOCATION MATCH =================
+
                         if (
                             preferredLocation &&
                             (job.location || "")
                                 .toLowerCase()
-                                .includes(preferredLocation)
+                                .includes(
+                                    preferredLocation
+                                )
                         ) {
 
                             score += 3;
@@ -337,72 +567,303 @@ function loadRecommendations() {
 
                     })
 
-                    // Only show matching opportunities
-                    .filter(job => job.score > 0)
+
+                    // Only matching opportunities
+
+                    .filter(
+                        job =>
+                            job.score > 0
+                    )
+
 
                     // Highest match first
+
                     .sort(
                         (a, b) =>
                             b.score - a.score
                     )
 
-                    // Show maximum 4
+
+                    // Maximum 4
+
                     .slice(0, 4);
 
 
-                // ================= DISPLAY =================
+            // ================= NO RESULTS =================
 
-                if (recommendations.length === 0) {
+            if (recommendations.length === 0) {
 
-                    container.innerHTML = `
+                container.innerHTML = `
 
-                        <div class="recommendation-empty">
+                    <div class="recommendation-empty">
 
-                            <h3>
-                                🔍 No recommendations yet
-                            </h3>
+                        <h3>
+                            🔍 No recommendations yet
+                        </h3>
 
-                            <p>
-                                Add your skills and preferred location
-                                in your profile to get personalized
-                                opportunities.
-                            </p>
+                        <p>
+                            Add your skills and preferred
+                            location in your profile to get
+                            personalized opportunities.
+                        </p>
 
-                            <a href="profile.html">
-                                Update Profile →
-                            </a>
+                        <a href="profile.html">
+                            Update Profile →
+                        </a>
 
-                        </div>
+                    </div>
 
-                    `;
+                `;
 
-                    return;
+                return;
 
-                }
-
-
-                let html = "";
+            }
 
 
-                recommendations.forEach(job => {
+            // ================= DISPLAY =================
+
+            let html = "";
+
+
+            recommendations.forEach(
+                job => {
+
+
+                    // ================= MATCH PERCENTAGE =================
+
+                    const maxScore =
+                        (userSkills.length * 2) +
+                        (preferredLocation ? 3 : 0);
+
+
+                    let matchPercentage = 0;
+
+
+                    if (maxScore > 0) {
+
+                        matchPercentage =
+                            Math.round(
+                                (
+                                    job.score /
+                                    maxScore
+                                ) * 100
+                            );
+
+                    }
+
+
+                    // Keep between 0 and 100
+
+                    matchPercentage =
+                        Math.min(
+                            100,
+                            Math.max(
+                                0,
+                                matchPercentage
+                            )
+                        );
+
+
+                    // ================= MATCHED SKILLS =================
+
+                    const matchedSkills =
+                        userSkills.filter(
+                            userSkill =>
+
+                                (job.skills || "")
+                                    .toLowerCase()
+                                    .split(",")
+                                    .some(
+                                        jobSkill =>
+                                            jobSkill
+                                                .trim()
+                                                .includes(
+                                                    userSkill
+                                                ) ||
+                                            userSkill.includes(
+                                                jobSkill
+                                                    .trim()
+                                            )
+                                    )
+                        );
+
+
+                    // ================= MISSING SKILLS =================
+
+                    const missingSkills =
+                        (job.skills || "")
+                            .split(",")
+                            .map(skill =>
+                                skill.trim()
+                            )
+                            .filter(skill => {
+
+                                if (!skill) {
+                                    return false;
+                                }
+
+                                return !userSkills.some(
+                                    userSkill =>
+
+                                        skill
+                                            .toLowerCase()
+                                            .includes(
+                                                userSkill
+                                            ) ||
+
+                                        userSkill.includes(
+                                            skill
+                                                .toLowerCase()
+                                        )
+
+                                );
+
+                            })
+                            .slice(0, 2);
+
+
+                    // ================= WHY THIS FITS =================
+
+                    let reasonsHTML = "";
+
+
+                    // Skill reason
+
+                    if (matchedSkills.length > 0) {
+
+                        reasonsHTML += `
+
+                            <li>
+                                ✅ Your skills match:
+                                <strong>
+                                    ${matchedSkills.join(", ")}
+                                </strong>
+                            </li>
+
+                        `;
+
+                    }
+
+
+                    // Location reason
+
+                    if (
+                        preferredLocation &&
+                        (job.location || "")
+                            .toLowerCase()
+                            .includes(
+                                preferredLocation
+                            )
+                    ) {
+
+                        reasonsHTML += `
+
+                            <li>
+                                ✅ ${job.location}
+                                matches your preferred
+                                location
+                            </li>
+
+                        `;
+
+                    }
+
+
+                    // Experience reason
+
+                    if (job.experience_level) {
+
+                        reasonsHTML += `
+
+                            <li>
+                                💼 Experience:
+                                <strong>
+                                    ${job.experience_level}
+                                </strong>
+                            </li>
+
+                        `;
+
+                    }
+
+
+                    // Missing skills
+
+                    if (missingSkills.length > 0) {
+
+                        reasonsHTML += `
+
+                            <li class="missing-skill">
+
+                                ⚠️ Learn
+                                <strong>
+                                    ${missingSkills.join(", ")}
+                                </strong>
+
+                                to improve your match
+
+                            </li>
+
+                        `;
+
+                    }
+
+
+                    // If no reason exists
+
+                    if (reasonsHTML === "") {
+
+                        reasonsHTML = `
+
+                            <li>
+                                🔎 This opportunity
+                                matches your profile.
+                            </li>
+
+                        `;
+
+                    }
+
+
+                    // ================= CARD =================
 
                     html += `
 
                         <div class="recommendation-card">
 
-                            <div class="recommendation-badge">
-                                ⭐ Recommended
+
+                            <div class="recommendation-top">
+
+                                <span
+                                    class="recommendation-badge">
+
+                                    ⭐ Recommended
+
+                                </span>
+
+
+                                <span
+                                    class="match-score">
+
+                                    ${matchPercentage}% Match
+
+                                </span>
+
                             </div>
+
 
                             <h3>
                                 ${job.job_title}
                             </h3>
 
+
                             <h4>
                                 ${job.company_name}
                             </h4>
 
-                            <div class="recommendation-info">
+
+                            <div
+                                class="recommendation-info">
 
                                 <span>
                                     📍 ${job.location}
@@ -418,28 +879,56 @@ function loadRecommendations() {
 
                             </div>
 
-                            <p class="matched-skills">
+
+                            <p
+                                class="matched-skills">
+
                                 🛠 ${job.skills}
+
                             </p>
 
+
+                            <div
+                                class="why-fit">
+
+                                <h4>
+                                    💡 Why this fits you
+                                </h4>
+
+                                <ul>
+
+                                    ${reasonsHTML}
+
+                                </ul>
+
+                            </div>
+
+
                             <a
-                                href="internships.html"
+                                href="internship-details.html?id=${job.id}"
                                 class="recommendation-btn">
 
                                 View Internship →
 
                             </a>
 
+
                         </div>
 
                     `;
 
-                });
+                }
+            );
 
 
-                container.innerHTML = html;
+            // ================= INSERT HTML =================
+
+            container.innerHTML = html;
 
         })
+
+
+        // ================= ERROR =================
 
         .catch(error => {
 
@@ -449,9 +938,20 @@ function loadRecommendations() {
             );
 
             container.innerHTML = `
-                <p>
-                    Unable to load recommendations.
-                </p>
+
+                <div class="recommendation-empty">
+
+                    <h3>
+                        ⚠️ Unable to load recommendations
+                    </h3>
+
+                    <p>
+                        Please make sure the backend
+                        server is running.
+                    </p>
+
+                </div>
+
             `;
 
         });
@@ -459,5 +959,10 @@ function loadRecommendations() {
 }
 
 
-// Start recommendations
+// ==================================================
+// ================= START ===========================
+// ==================================================
+
+loadDashboard();
+
 loadRecommendations();

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Team Invitations</title>
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/invitations.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <div class="brand">
+            💜 Internship & Hackathon Aggregator
+        </div>
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">Dashboard</a>
+
+            <a href="internships.html">Internships</a>
+
+            <a href="hackathons.html">Hackathons</a>
+
+            <a href="team-matcher.html">
+                🤝 Team Matcher
+            </a>
+
+            <a href="saved.html">
+                Saved
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Page Header -->
+    <section class="page-header">
+
+        <h1>📩 Team Invitations</h1>
+
+        <p>
+            View invitations from students who want to team up with you.
+        </p>
+
+    </section>
+
+
+    <!-- Invitations -->
+    <!-- Received Invitations -->
+<section class="invitations-section">
+
+    <h2 class="invitation-section-title">
+        📥 Received Invitations
+    </h2>
+
+    <div id="invitationsContainer">
+
+        <div class="loading-message">
+            Loading invitations...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Sent Invitations -->
+<section class="invitations-section">
+
+    <h2 class="invitation-section-title">
+        📤 Sent Invitations
+    </h2>
+
+    <div id="sentInvitationsContainer">
+
+        <div class="loading-message">
+            Loading sent invitations...
+        </div>
+
+    </div>
+
+</section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <p>
+            © 2026 Internship & Hackathon Aggregator
+        </p>
+
+    </footer>
+
+
+    <script src="js/logout.js"></script>
+    <script src="js/invitations.js"></script>
+
+</body>
+
+</html>

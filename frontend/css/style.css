@@ -1,166 +1,757 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Arial, sans-serif;
 }
 
-body{
-    background:#eef3ff;
+body {
+    background: #f8f7ff;
+    color: #1f2937;
 }
 
-/* Navigation */
-
-.navbar{
-
-    background:#2563eb;
-
-    color:white;
-
-    padding:18px 60px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
+a {
+    text-decoration: none;
 }
 
-.logo{
 
-    font-size:28px;
+/* =====================================================
+   COMMON NAVBAR
+   SAME DESIGN ON ALL PAGES
+===================================================== */
 
-    font-weight:bold;
+.navbar {
+    width: 100%;
+    height: 102px;
 
+    padding: 0 42px;
+
+    background: linear-gradient(
+        135deg,
+        #8b5cf6,
+        #7c3aed
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: white;
 }
 
-.navbar ul{
 
-    list-style:none;
+/* =====================================================
+   WEBSITE LOGO / NAME
+===================================================== */
 
-    display:flex;
+.navbar .logo {
+    color: white;
 
-    gap:25px;
+    font-size: 30px;
+    font-weight: 700;
 
+    white-space: nowrap;
+
+    flex-shrink: 0;
 }
 
-.navbar a{
 
-    color:white;
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
-    text-decoration:none;
+.navbar ul {
+    list-style: none;
 
-    font-weight:bold;
+    display: flex;
+    align-items: center;
 
+    gap: 30px;
+
+    margin: 0;
+    padding: 0;
+
+    white-space: nowrap;
 }
 
-.navbar a:hover{
-
-    color:#ffd54f;
-
+.navbar li {
+    margin: 0;
+    padding: 0;
 }
 
-/* Hero Section */
 
-.hero{
+/* Navigation links */
 
-    text-align:center;
+.navbar ul a {
+    color: white;
 
-    padding:50px 20px;
+    font-size: 20px;
+    font-weight: 600;
 
+    white-space: nowrap;
+
+    display: inline-flex;
+    align-items: center;
+
+    padding: 8px 0;
+
+    transition: 0.2s ease;
 }
 
-.hero h1{
-
-    font-size:42px;
-
-    color:#2563eb;
-
+.navbar ul a:hover {
+    opacity: 0.8;
 }
 
-.hero p{
 
-    margin-top:10px;
+/* =====================================================
+   ACTIVE NAVIGATION
+===================================================== */
 
-    font-size:18px;
-
-    color:#555;
-
+.navbar ul a.active {
+    border-bottom: 3px solid white;
+    padding-bottom: 7px;
 }
 
-/* Dashboard Cards */
 
-.dashboard{
+/* =====================================================
+   LOGOUT BUTTON
+===================================================== */
 
-    display:grid;
+.navbar .logout-btn {
+    background: white;
+    color: #7c3aed;
 
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    border: none;
+    border-radius: 13px;
 
-    gap:30px;
+    padding: 13px 22px;
 
-    padding:40px 80px;
+    font-size: 18px;
+    font-weight: 600;
 
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
 }
 
-.box{
-
-    background:white;
-
-    border-radius:15px;
-
-    padding:35px;
-
-    text-align:center;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.1);
-
-    transition:.3s;
-
+.navbar .logout-btn:hover {
+    background: #f5f3ff;
 }
 
-.box:hover{
 
-    transform:translateY(-8px);
+/* If Logout is a normal button instead of .logout-btn */
 
+.navbar button {
+    background: white;
+    color: #7c3aed;
+
+    border: none;
+    border-radius: 13px;
+
+    padding: 13px 22px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
 }
 
-.icon{
-
-    font-size:50px;
-
-    margin-bottom:15px;
-
+.navbar button:hover {
+    background: #f5f3ff;
 }
 
-.box h2{
 
-    color:#2563eb;
+/* =====================================================
+   INTERNSHIP HERO
+===================================================== */
 
-    font-size:42px;
+.hero {
+    text-align: center;
 
+    padding: 70px 20px 35px;
 }
 
-.box p{
+.hero h1 {
+    color: #5b21b6;
 
-    margin-top:10px;
+    font-size: 42px;
+    font-weight: 700;
 
-    font-size:20px;
-
+    margin-bottom: 12px;
 }
 
-.box a{
+.hero p {
+    color: #64748b;
 
-    text-decoration:none;
-
-    color:#2563eb;
-
-    font-weight:bold;
-
-    font-size:20px;
-
+    font-size: 17px;
 }
 
-*{
-    font-family: 'Poppins', sans-serif;
+
+/* =====================================================
+   SEARCH SECTION
+===================================================== */
+
+.search-section {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 25px auto 10px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+#searchInput {
+    width: 100%;
+    height: 58px;
+
+    padding: 15px 20px;
+
+    border: 1px solid #d9dde7;
+    border-radius: 12px;
+
+    background: white;
+
+    font-size: 16px;
+    color: #334155;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#searchInput::placeholder {
+    color: #94a3b8;
+}
+
+#searchInput:focus {
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+
+/* =====================================================
+   FILTERS
+===================================================== */
+
+.filters {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.filters select {
+    width: 100%;
+    height: 50px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #d9dde7;
+    border-radius: 10px;
+
+    background: white;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.filters select:hover {
+    border-color: #a78bfa;
+}
+
+.filters select:focus {
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.10);
+}
+
+
+/* =====================================================
+   INTERNSHIP CARDS
+===================================================== */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(330px, 1fr));
+
+    gap: 24px;
+
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 25px auto 50px;
+}
+
+.card {
+    background: white;
+
+    padding: 24px;
+
+    border-radius: 18px;
+
+    border: 1px solid #e9e7f2;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+
+    border-color: #d8ccff;
+
+    box-shadow:
+        0 12px 30px rgba(76, 29, 149, 0.10);
+}
+
+
+/* =====================================================
+   COMPANY
+===================================================== */
+
+.company {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 18px;
+}
+
+.company .logo {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #6d28d9
+        );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 21px;
+    font-weight: 700;
+
+    color: white;
+}
+
+.company h3 {
+    margin: 0 0 4px;
+
+    color: #1e293b;
+
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.company p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   JOB TITLE
+===================================================== */
+
+.job {
+    font-size: 20px;
+    font-weight: 700;
+
+    margin: 18px 0 16px;
+
+    color: #1e293b;
+
+    line-height: 1.35;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.expired,
+.closing,
+.open {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    margin-top: 2px;
+}
+
+.expired {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.closing {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.open {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+
+/* =====================================================
+   INFORMATION
+===================================================== */
+
+.info {
+    margin: 9px 0;
+
+    color: #475569;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+.card .info:last-of-type {
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin-top: 15px;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 3;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   SKILLS
+===================================================== */
+
+.skills {
+    margin-top: 17px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px;
+}
+
+.skill {
+    background: #f1edff;
+
+    color: #6d28d9;
+
+    padding: 6px 10px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.buttons {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 22px;
+}
+
+.save {
+    background: white;
+
+    border: 1px solid #8b5cf6;
+
+    color: #6d28d9;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.save:hover {
+    background: #f5f3ff;
+    color: #5b21b6;
+}
+
+.apply {
+    background: #7c3aed;
+
+    color: white;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.apply:hover {
+    background: #6d28d9;
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   NO RESULTS
+===================================================== */
+
+.no-result {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 70px 20px;
+
+    color: #64748b;
+}
+
+.no-result h2 {
+    color: #334155;
+
+    margin-bottom: 8px;
+}
+
+.no-result p {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   RESPONSIVE - TABLET
+===================================================== */
+
+@media (max-width: 1200px) {
+
+    .navbar {
+        padding: 0 25px;
+    }
+
+    .navbar .logo {
+        font-size: 25px;
+    }
+
+    .navbar ul {
+        gap: 20px;
+    }
+
+    .navbar ul a {
+        font-size: 17px;
+    }
+
+    .navbar button,
+    .navbar .logout-btn {
+        font-size: 16px;
+        padding: 11px 17px;
+    }
+}
+
+
+/* =====================================================
+   RESPONSIVE - SMALLER SCREEN
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .navbar {
+        height: auto;
+
+        min-height: 90px;
+
+        padding: 15px 20px;
+
+        gap: 15px;
+    }
+
+    .navbar .logo {
+        font-size: 22px;
+    }
+
+    .navbar ul {
+        gap: 14px;
+    }
+
+    .navbar ul a {
+        font-size: 14px;
+    }
+
+    .navbar button,
+    .navbar .logout-btn {
+        font-size: 14px;
+
+        padding: 10px 15px;
+    }
+
+    .filters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =====================================================
+   RESPONSIVE - MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        flex-direction: column;
+
+        height: auto;
+
+        padding: 18px;
+
+        gap: 15px;
+    }
+
+    .navbar .logo {
+        font-size: 23px;
+
+        white-space: normal;
+
+        text-align: center;
+    }
+
+    .navbar ul {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 12px;
+    }
+
+    .navbar ul a {
+        font-size: 14px;
+    }
+
+    .navbar button,
+    .navbar .logout-btn {
+        font-size: 14px;
+    }
+
+    .hero {
+        padding: 45px 15px 25px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .search-section {
+        width: 92%;
+    }
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
+
+    .cards {
+        width: 92%;
+
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .save,
+    .apply {
+        width: 100%;
+
+        text-align: center;
+
+        box-sizing: border-box;
+    }
 }

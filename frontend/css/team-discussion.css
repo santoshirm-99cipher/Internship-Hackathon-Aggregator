@@ -1,0 +1,136 @@
+.discussion-section {
+    width: 90%;
+    max-width: 900px;
+    margin: 30px auto 60px;
+}
+
+.discussion-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.discussion-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.discussion-header h2 {
+    margin: 0 0 6px;
+}
+
+#teamInfo {
+    color: #777;
+    font-size: 14px;
+}
+
+.messages-container {
+    height: 450px;
+    overflow-y: auto;
+    padding: 25px;
+    background: #fafafa;
+}
+
+.message {
+    margin-bottom: 18px;
+    max-width: 75%;
+}
+
+.message.mine {
+    margin-left: auto;
+}
+
+.message.other {
+    margin-right: auto;
+}
+
+.message-name {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.message-bubble {
+    padding: 12px 15px;
+    border-radius: 12px;
+    background: #eee;
+    word-wrap: break-word;
+}
+
+.message.mine .message-bubble {
+    background: #6c3fb5;
+    color: white;
+}
+
+.message-time {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #888;
+}
+
+.message-form {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid #eee;
+}
+
+.message-form input {
+    flex: 1;
+    padding: 13px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+
+.message-form input:focus {
+    border-color: #6c3fb5;
+}
+
+.message-form button {
+    padding: 13px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #6c3fb5;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.message-form button:hover {
+    opacity: 0.9;
+}
+
+.loading-message,
+.empty-message {
+    text-align: center;
+    padding: 40px;
+    color: #777;
+}
+
+@media (max-width: 600px) {
+
+    .discussion-section {
+        width: 95%;
+    }
+
+    .messages-container {
+        height: 400px;
+        padding: 15px;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+
+    .message-form {
+        flex-direction: column;
+    }
+
+    .message-form button {
+        width: 100%;
+    }
+}

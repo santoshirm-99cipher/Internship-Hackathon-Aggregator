@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Hackathons</title>
+
+    <link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/admin.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🏆 Manage Hackathons</h1>
+
+    <button onclick="location.href='admin.html'">
+        ← Back to Admin Dashboard
+    </button>
+
+    <button onclick="showAddForm()">
+        ➕ Add Hackathon
+    </button>
+
+    <div id="formContainer"></div>
+
+    <hr>
+
+    <h2>Existing Hackathons</h2>
+
+<input
+    type="text"
+    id="searchHackathons"
+    placeholder="🔍 Search by event, organizer or mode..."
+    oninput="searchHackathons()"
+>
+
+<div id="hackathonList" class="admin-list-grid">
+    Loading...
+</div>
+
+</div>
+
+
+<script>
+
+const API_URL =
+    "http://localhost:5001/api/hackathons";
+
+    let allHackathons = [];
+
+
+// ==========================================
+// CHECK ADMIN
+// ==========================================
+
+const user =
+    JSON.parse(localStorage.getItem("user"));
+
+if (!user || user.role !== "admin") {
+
+    alert("Access Denied ❌");
+
+    window.location.href =
+        "dashboard.html";
+
+}
+
+
+// ==========================================
+// LOAD HACKATHONS
+// ==========================================
+
+async function loadHackathons() {
+
+    try {
+
+        const response =
+            await fetch(API_URL);
+
+        const hackathons =
+            await response.json();
+            allHackathons = hackathons;
+
+        const list =
+            document.getElementById(
+                "hackathonList"
+            );
+
+        list.innerHTML = "";
+
+        hackathons.forEach(hackathon => {
+
+            const deadline =
+                hackathon.deadline
+                ? String(hackathon.deadline)
+                    .split("T")[0]
+                : "Not specified";
+
+            list.innerHTML += `
+
+                <div class="admin-card">
+
+                    <h3>
+                        ${hackathon.event_name}
+                    </h3>
+
+                    <p>
+                        <strong>
+                            Organizer:
+                        </strong>
+                        ${hackathon.organizer || "Not specified"}
+                    </p>
+
+                    <p>
+                        💻 ${hackathon.mode || "Not specified"}
+                    </p>
+
+                    <p>
+                        🏆 ${hackathon.prize || "Not specified"}
+                    </p>
+
+                    <p>
+                        📅 ${deadline}
+                    </p>
+
+                    <p>
+                        👥 ${hackathon.team_size || "Not specified"}
+                    </p>
+
+                    <button
+                        onclick="editHackathon(${hackathon.id})">
+
+                        ✏️ Edit
+
+                    </button>
+
+                    <button
+                        onclick="deleteHackathon(${hackathon.id})">
+
+                        🗑️ Delete
+
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "hackathonList"
+        ).innerHTML =
+            "Unable to load hackathons.";
+
+    }
+
+}
+
+
+// ==========================================
+// ADD FORM
+// ==========================================
+
+function showAddForm() {
+
+    document.getElementById(
+        "formContainer"
+    ).innerHTML = `
+
+        <div class="admin-card">
+
+            <h2>➕ Add Hackathon</h2>
+
+            <input
+                id="eventName"
+                placeholder="Event Name">
+
+            <input
+                id="organizer"
+                placeholder="Organizer">
+
+            <input
+                id="mode"
+                placeholder="Mode">
+
+            <input
+                id="prize"
+                placeholder="Prize">
+
+            <input
+                id="deadline"
+                type="date">
+
+            <input
+                id="registrationLink"
+                placeholder="Registration Link">
+
+            <input
+                id="teamSize"
+                placeholder="Team Size">
+
+            <input
+                id="eligibility"
+                placeholder="Eligibility">
+
+            <textarea
+                id="description"
+                placeholder="Description">
+            </textarea>
+
+            <br><br>
+
+            <button onclick="addHackathon()">
+
+                💾 Save Hackathon
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+// ==========================================
+// ADD HACKATHON
+// ==========================================
+
+async function addHackathon() {
+
+    const hackathon = {
+
+        event_name:
+            document.getElementById(
+                "eventName"
+            ).value,
+
+        organizer:
+            document.getElementById(
+                "organizer"
+            ).value,
+
+        mode:
+            document.getElementById(
+                "mode"
+            ).value,
+
+        prize:
+            document.getElementById(
+                "prize"
+            ).value,
+
+        deadline:
+            document.getElementById(
+                "deadline"
+            ).value,
+
+        registration_link:
+            document.getElementById(
+                "registrationLink"
+            ).value,
+
+        team_size:
+            document.getElementById(
+                "teamSize"
+            ).value,
+
+        eligibility:
+            document.getElementById(
+                "eligibility"
+            ).value,
+
+        description:
+            document.getElementById(
+                "description"
+            ).value
+
+    };
+
+
+    try {
+
+        const response =
+            await fetch(API_URL, {
+
+                method: "POST",
+
+                headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+},
+
+                body:
+                    JSON.stringify(hackathon)
+
+            });
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Unable to add hackathon."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Hackathon added successfully! ✅"
+        );
+
+
+        document.getElementById(
+            "formContainer"
+        ).innerHTML = "";
+
+
+        loadHackathons();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to connect to server."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// EDIT HACKATHON
+// ==========================================
+
+async function editHackathon(id) {
+
+    try {
+
+        const response =
+            await fetch(API_URL);
+
+        const hackathons =
+            await response.json();
+
+        const hackathon =
+            hackathons.find(
+                item => item.id == id
+            );
+
+
+        if (!hackathon) {
+
+            alert(
+                "Hackathon not found."
+            );
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "formContainer"
+        ).innerHTML = `
+
+            <div class="admin-card">
+
+                <h2>✏️ Edit Hackathon</h2>
+
+                <input
+                    id="eventName"
+                    value="${hackathon.event_name || ""}"
+                    placeholder="Event Name">
+
+                <input
+                    id="organizer"
+                    value="${hackathon.organizer || ""}"
+                    placeholder="Organizer">
+
+                <input
+                    id="mode"
+                    value="${hackathon.mode || ""}"
+                    placeholder="Mode">
+
+                <input
+                    id="prize"
+                    value="${hackathon.prize || ""}"
+                    placeholder="Prize">
+
+                <input
+                    id="deadline"
+                    type="date"
+                    value="${
+                        hackathon.deadline
+                        ? String(
+                            hackathon.deadline
+                          ).split("T")[0]
+                        : ""
+                    }">
+
+                <input
+                    id="registrationLink"
+                    value="${hackathon.registration_link || ""}"
+                    placeholder="Registration Link">
+
+                <input
+                    id="teamSize"
+                    value="${hackathon.team_size || ""}"
+                    placeholder="Team Size">
+
+                <input
+                    id="eligibility"
+                    value="${hackathon.eligibility || ""}"
+                    placeholder="Eligibility">
+
+                <textarea
+                    id="description"
+                    placeholder="Description">${hackathon.description || ""}</textarea>
+
+                <br><br>
+
+                <button
+                    onclick="updateHackathon(${id})">
+
+                    💾 Save Changes
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to load hackathon."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// UPDATE HACKATHON
+// ==========================================
+
+async function updateHackathon(id) {
+
+    const updatedHackathon = {
+
+        event_name:
+            document.getElementById(
+                "eventName"
+            ).value,
+
+        organizer:
+            document.getElementById(
+                "organizer"
+            ).value,
+
+        mode:
+            document.getElementById(
+                "mode"
+            ).value,
+
+        prize:
+            document.getElementById(
+                "prize"
+            ).value,
+
+        deadline:
+            document.getElementById(
+                "deadline"
+            ).value,
+
+        registration_link:
+            document.getElementById(
+                "registrationLink"
+            ).value,
+
+        team_size:
+            document.getElementById(
+                "teamSize"
+            ).value,
+
+        eligibility:
+            document.getElementById(
+                "eligibility"
+            ).value,
+
+        description:
+            document.getElementById(
+                "description"
+            ).value
+
+    };
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/${id}`,
+                {
+
+                    method: "PUT",
+
+                    headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+},
+
+                    body:
+                        JSON.stringify(
+                            updatedHackathon
+                        )
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Update failed."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Hackathon updated successfully! ✅"
+        );
+
+
+        document.getElementById(
+            "formContainer"
+        ).innerHTML = "";
+
+
+        loadHackathons();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to update hackathon."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// DELETE HACKATHON
+// ==========================================
+
+async function deleteHackathon(id) {
+
+    if (!confirm(
+        "Are you sure you want to delete this hackathon?"
+    )) {
+
+        return;
+
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/${id}`,
+            {
+                method: "DELETE",
+
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Delete failed."
+            );
+
+            return;
+
+        }
+
+        alert(
+            "Hackathon deleted successfully! ✅"
+        );
+
+        loadHackathons();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to delete hackathon."
+        );
+
+    }
+
+}
+
+// ==========================================
+// SEARCH HACKATHONS
+// ==========================================
+
+function searchHackathons() {
+
+    const search =
+        document.getElementById("searchHackathons")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const cards =
+        document.querySelectorAll(
+            "#hackathonList .admin-card"
+        );
+
+    cards.forEach(card => {
+
+        const text =
+            card.textContent.toLowerCase();
+
+        if (text.includes(search)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+
+}
+
+// ==========================================
+// START
+// ==========================================
+
+loadHackathons();
+
+</script>
+
+</body>
+
+</html>

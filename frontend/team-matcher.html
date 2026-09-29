@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Team Chemistry Matcher</title>
+
+    <link rel="stylesheet"
+          href="css/common.css">
+
+    <link rel="stylesheet"
+          href="css/team-matcher.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="brand">
+        💜 Internship & Hackathon Aggregator
+    </div>
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="internships.html">
+            Internships
+        </a>
+
+        <a href="hackathons.html">
+            Hackathons
+        </a>
+
+        <a href="team-matcher.html" class="active">
+            🤝 Team Matcher
+        </a>
+
+        <a href="saved.html">
+            Saved
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <button id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+<section class="page-header">
+
+    <h1>👥 Team Chemistry Matcher</h1>
+
+    <p>
+        Find teammates whose skills,
+        roles and availability complement yours.
+    </p>
+
+</section>
+
+
+<section class="team-form-section">
+
+    <div class="team-form-card">
+
+        <h2>🚀 Create Your Team Profile</h2>
+
+        <p>
+            Tell us about yourself so we can
+            find compatible teammates.
+        </p>
+
+
+        <form id="teamProfileForm">
+
+            <label>
+                Your Name
+            </label>
+
+            <input
+                type="text"
+                id="studentName"
+                placeholder="Enter your name"
+                required
+            >
+
+
+            <label>
+                Your Skills
+            </label>
+
+            <input
+                type="text"
+                id="skills"
+                placeholder="HTML, CSS, JavaScript, React"
+                required
+            >
+
+            <small>
+                Separate skills using commas.
+            </small>
+
+
+            <label>
+                Preferred Role
+            </label>
+
+            <select id="role" required>
+
+                <option value="">
+                    Select role
+                </option>
+
+                <option value="Developer">
+                    👨‍💻 Developer
+                </option>
+
+                <option value="Designer">
+                    🎨 Designer
+                </option>
+
+                <option value="Researcher">
+                    🔬 Researcher
+                </option>
+
+                <option value="Presenter">
+                    🎤 Presenter
+                </option>
+
+                <option value="Manager">
+                    📋 Team Manager
+                </option>
+
+            </select>
+
+
+            <label>
+                Availability
+            </label>
+
+            <select id="availability" required>
+
+                <option value="">
+                    Hours per week
+                </option>
+
+                <option value="5">
+                    1–5 hours
+                </option>
+
+                <option value="10">
+                    6–10 hours
+                </option>
+
+                <option value="20">
+                    11–20 hours
+                </option>
+
+                <option value="30">
+                    20+ hours
+                </option>
+
+            </select>
+
+
+            <label>
+                Communication Style
+            </label>
+
+            <select id="communication" required>
+
+                <option value="">
+                    Select style
+                </option>
+
+                <option value="chat">
+                    💬 Mostly Chat
+                </option>
+
+                <option value="call">
+                    📞 Calls / Meetings
+                </option>
+
+                <option value="mixed">
+                    🔄 Mixed
+                </option>
+
+            </select>
+
+
+            <label>
+                Hackathon Experience
+            </label>
+
+            <select id="experience" required>
+
+                <option value="">
+                    Select experience
+                </option>
+
+                <option value="beginner">
+                    🌱 Beginner
+                </option>
+
+                <option value="intermediate">
+                    🚀 Intermediate
+                </option>
+
+                <option value="advanced">
+                    🏆 Experienced
+                </option>
+
+            </select>
+
+            <div class="form-group">
+
+    <label for="teamStatus">
+        🟢 Team Status
+    </label>
+
+    <select id="teamStatus">
+
+        <option value="Looking for Team">
+            🟢 Looking for Team
+        </option>
+
+        <option value="Team Formed">
+            🟡 Team Formed
+        </option>
+
+        <option value="Not Available">
+            ⚪ Not Available
+        </option>
+
+    </select>
+
+</div>
+
+            <button type="submit"
+                    class="primary-btn">
+
+                🔍 Find Compatible Teammates
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<div class="invitations-card">
+    <div class="invitations-icon">📩</div>
+
+    <div class="invitations-content">
+        <h2>Team Invitations</h2>
+        <p>Check invitations from students who want to team up with you.</p>
+    </div>
+
+    <a href="invitations.html" class="view-invitations-btn">
+        View Invitations →
+    </a>
+</div>
+
+
+<section class="matches-section">
+
+    <h2>
+        🔥 Your Team Matches
+    </h2>
+
+    <div id="matchesContainer">
+
+        <p>
+            Create your profile to find teammates.
+        </p>
+
+    </div>
+
+</section>
+
+<div class="my-team-link">
+    <h3>🤝 Your Team</h3>
+    <p>View the teammates you have connected with.</p>
+    <a href="my-team.html" class="my-team-btn">View My Team</a>
+</div>
+
+<footer class="footer">
+
+    <p>
+        © 2026 Internship & Hackathon Aggregator
+    </p>
+
+</footer>
+
+
+<script src="js/logout.js"></script>
+
+<script src="js/team-matcher.js"></script>
+
+</body>
+
+</html>

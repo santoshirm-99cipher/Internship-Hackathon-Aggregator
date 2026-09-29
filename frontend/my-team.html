@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Team | Internship & Hackathon Aggregator</title>
+
+    <!-- SAME COMMON STYLING AS OTHER PAGES -->
+    <link rel="stylesheet"
+          href="css/common.css">
+
+    <!-- My Team specific styling -->
+    <link rel="stylesheet"
+          href="css/my-team.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="brand">
+        💜 Internship & Hackathon Aggregator
+    </div>
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="internships.html">
+            Internships
+        </a>
+
+        <a href="hackathons.html">
+            Hackathons
+        </a>
+
+        <a href="team-matcher.html">
+            🤝 Team Matcher
+        </a>
+
+        <a href="saved.html">
+            Saved
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <button id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+<section class="page-header">
+
+    <h1>🤝 My Team</h1>
+
+    <p>
+        View the teammates you have connected with.
+    </p>
+
+</section>
+
+
+<section class="team-stats">
+
+    <div class="stat-card">
+
+        <span>👥</span>
+
+        <h3 id="teamCount">0</h3>
+
+        <p>
+            Team Members
+        </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <span>🤝</span>
+
+        <h3>
+            Connected
+        </h3>
+
+        <p>
+            Accepted Connections
+        </p>
+
+    </div>
+
+    <div class="discussion-link">
+    <a href="team-discussion.html">
+        💬 Open Project Discussion
+    </a>
+</div>
+
+</section>
+
+
+<section class="matches-section">
+
+    <h2>
+        👥 Your Teammates
+    </h2>
+
+    <div id="teamContainer">
+
+        <p>
+            Loading your team...
+        </p>
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 Internship & Hackathon Aggregator
+    </p>
+
+</footer>
+
+
+<script src="js/logout.js"></script>
+
+<script src="js/my-team.js"></script>
+
+</body>
+
+</html>

@@ -8,8 +8,8 @@
 
     <title>Dashboard | Internship & Hackathon Aggregator</title>
 
-    <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/common.css">
 
 </head>
 
@@ -35,6 +35,11 @@
 
         <a href="hackathons.html">
             Hackathons
+        </a>
+
+        <!-- ⭐ NEW -->
+        <a href="team-matcher.html">
+            🤝 Team Matcher
         </a>
 
         <a href="saved.html">
@@ -68,6 +73,13 @@
             Welcome Back 👋
         </h1>
 
+        <button id="adminPanelBtn"
+        class="admin-panel-btn"
+        onclick="window.location.href='admin.html'"
+        style="display: none;">
+    👑 Admin Panel
+</button>
+
         <p class="hero-text">
             Discover internships and hackathons that can
             help you build your skills and career.
@@ -92,69 +104,101 @@
 
 <!-- ================= STATISTICS ================= -->
 
-<section class="stats-section">
+<section class="stats-grid">
 
     <div class="stat-card">
-
-        <div class="stat-icon">
-            💼
-        </div>
-
+        <div class="stat-icon">💼</div>
         <div>
             <p>Available</p>
             <h2 id="internshipCount">0</h2>
             <span>Internships</span>
         </div>
-
     </div>
 
-
     <div class="stat-card">
-
-        <div class="stat-icon">
-            🏆
-        </div>
-
+        <div class="stat-icon">🏆</div>
         <div>
             <p>Available</p>
             <h2 id="hackathonCount">0</h2>
             <span>Hackathons</span>
         </div>
-
     </div>
 
-
     <div class="stat-card">
-
-        <div class="stat-icon">
-            ❤️
-        </div>
-
+        <div class="stat-icon">❤️</div>
         <div>
             <p>Your</p>
             <h2 id="savedCount">0</h2>
             <span>Saved Opportunities</span>
         </div>
-
     </div>
 
-
-    <div class="stat-card profile-stat">
-
-        <div class="stat-icon">
-            👤
-        </div>
-
+    <div class="stat-card">
+        <div class="stat-icon">👤</div>
         <div>
-
             <p>Manage</p>
-
             <h2>Profile</h2>
+            <a href="profile.html">View Profile →</a>
+        </div>
+    </div>
 
-            <a href="profile.html">
-                View Profile →
+    <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div>
+            <p>Explore</p>
+            <h2>Analytics</h2>
+            <a href="analytics.html">View Skill Analytics →</a>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- ================= TEAM CHEMISTRY MATCHER ================= -->
+<!-- ⭐ SIGNATURE FEATURE -->
+
+<section class="section">
+
+    <div class="team-matcher-dashboard-card">
+
+        <div class="team-matcher-content">
+
+            <p class="section-label">
+                ⭐ SIGNATURE FEATURE
+            </p>
+
+            <h2>
+                🤝 Find Your Perfect Hackathon Team
+            </h2>
+
+            <p>
+                Don't build a team randomly. Find teammates based on
+                skills, roles, availability, communication style and
+                hackathon experience.
+            </p>
+
+            <div class="team-matcher-highlights">
+
+                <span>🛠 Skills</span>
+
+                <span>🎯 Roles</span>
+
+                <span>⏰ Availability</span>
+
+                <span>💬 Communication</span>
+
+                <span>🏆 Experience</span>
+
+            </div>
+
+            <a href="team-matcher.html" class="primary-btn">
+                🔍 Find Compatible Teammates →
             </a>
 
+        </div>
+
+        <div class="team-matcher-icon">
+            🤝
         </div>
 
     </div>
@@ -169,6 +213,7 @@
     <div class="section-heading">
 
         <div>
+
             <p class="section-label">
                 HANDPICKED FOR YOU
             </p>
@@ -176,6 +221,7 @@
             <h2>
                 Featured Opportunities
             </h2>
+
         </div>
 
     </div>
@@ -186,49 +232,53 @@
 
         <!-- Internship -->
 
-<div class="opportunity-card internship-feature">
+        <div class="opportunity-card internship-feature">
 
-    <div class="opportunity-top">
+            <div class="opportunity-top">
 
-        <span class="badge">
-            💼 Internship
-        </span>
+                <span class="badge">
+                    💼 Internship
+                </span>
 
-        <span class="featured-star">
-            ⭐
-        </span>
+                <span class="featured-star">
+                    ⭐
+                </span>
+
+            </div>
+
+            <div id="featuredInternship">
+                Loading...
+            </div>
+
+        </div>
+
+
+        <!-- Hackathon -->
+
+        <div class="opportunity-card hackathon-feature">
+
+            <div class="opportunity-top">
+
+                <span class="badge">
+                    🏆 Hackathon
+                </span>
+
+                <span class="featured-star">
+                    ⭐
+                </span>
+
+            </div>
+
+            <div id="featuredHackathon">
+                Loading...
+            </div>
+
+        </div>
 
     </div>
 
-    <div id="featuredInternship">
-        Loading...
-    </div>
-
-</div>
-
-      <!-- Hackathon -->
-
-<div class="opportunity-card hackathon-feature">
-
-    <div class="opportunity-top">
-
-        <span class="badge">
-            🏆 Hackathon
-        </span>
-
-        <span class="featured-star">
-            ⭐
-        </span>
-
-    </div>
-
-    <div id="featuredHackathon">
-        Loading...
-    </div>
-
-</div>  
-</div>
 </section>
+
 
 <!-- ================= RECOMMENDED ================= -->
 
@@ -261,6 +311,7 @@
     </div>
 
 </section>
+
 
 <!-- ================= LATEST ================= -->
 
@@ -409,6 +460,15 @@
 
 </footer>
 
+<script>
+    const loggedInUser =
+        JSON.parse(localStorage.getItem("user"));
+
+    if (loggedInUser && loggedInUser.role === "admin") {
+        document.getElementById("adminPanelBtn").style.display =
+            "inline-block";
+    }
+</script>
 
 <script src="js/logout.js"></script>
 <script src="js/dashboard.js"></script>
